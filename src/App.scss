@@ -1,0 +1,156 @@
+$color-primary: rgba(59, 101, 194, 1);
+$color-description: white;
+
+.App {
+  display: flex;
+}
+
+a {
+  text-decoration: none;
+}
+
+.left {
+  width: 30vw;
+  height: 100vh;
+  flex: initial;
+  display: flex;
+  flex-direction: column;
+}
+
+.left-header {
+  min-height: 20vh;
+  flex: initial;
+
+  .title {
+    text-align: center;
+    color: $color-primary;
+  }
+}
+
+.left-body {
+  width: 60%;
+  margin: 0 auto;
+  padding: 2rem;
+  flex: auto;
+}
+
+.left-footer {
+  text-align: center;
+  height: fit-content;
+  margin: 1rem;
+  flex: initial;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: .6rem;
+}
+
+.form-input {
+  width: 100%;
+  height: 2rem;
+  border: 1px rgba($color: #000000, $alpha: 0.4) solid;
+  border-radius: 8px;
+}
+
+.form-input:hover {
+  border: 1px rgba($color: #000000, $alpha: 1.0) solid;
+}
+
+.register {
+  margin-top: .5rem;
+  font-size: 12px;
+  opacity: .6;
+}
+
+button#submit {
+  border: 1px rgba($color: #000000, $alpha: 0.4) solid;
+  width: 100%;
+  height: 2rem;
+  border-radius: 8px;
+}
+
+button#submit:hover {
+  border: 1px rgba($color: #000000, $alpha: 1.0) solid;
+}
+
+
+.right {
+  flex: auto;
+  // background-image: url('../public/landing-page.png');
+  background-image: url('../public/landing-page.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  font-size: calc(10px + 2vmin);
+  color: $color-description;
+
+  &-body {
+    width: 60%;
+    flex: auto;
+    padding: 5vmin 6vmin;
+  }
+
+  a.more {
+    color: $color-description;
+    padding-bottom: .2rem;
+    border-bottom: 1px $color-description solid;
+  }
+}
+
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.description {
+  font-weight: 300;
+  font-size: 1.2rem;
+}
+
+
+
+/* 默认样式 */
+
+.App-logo {
+  height: 20vmin;
+  width: 100%;
+  pointer-events: none;
+  margin-left: calc(50vmin - 0.5 * #{width});
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 响应式设计 */
+
+@media (max-width: 800px) {
+  .left {
+    width: 100%;
+  }
+
+  .right {
+    display: none;
+  }
+}
