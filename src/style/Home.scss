@@ -10,23 +10,70 @@
   height: 100vh;
 
   header {
-    background-color: $color-background;
     grid-column: 1 / 4;
+    z-index: 100;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+    .title {
+      margin-left: 5vmin;
+      font-family: $font-special;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      font-size: 1.2rem;
+      font-family: $font-main;
+      margin-right: 5vmin;
+
+      button {
+        border: unset;
+        background-color: unset;
+        font-size: unset;
+        cursor: pointer;
+        color: $color-secondary;
+      }
+
+      .nav {
+        cursor: pointer;
+        border-bottom: 3px solid;
+        color: $color-secondary;
+        border-color: rgba($color: $color-secondary, $alpha: 0);
+
+        &:hover {
+          border-color: rgba($color: $color-secondary, $alpha: 0.7);
+        }
+      }
+    }
   }
 
   aside {
-    background-color: $color-primary;
+    background-color: $color-background;
     grid-row: 2 / 4;
   }
 
   main {
-    background-color: $color-secondary;
     grid-column: 2 / 4;
+    display: grid;
+    place-items: center;
   }
 
   footer {
-    background-color: $color-description;
     grid-row: 3 / 3;
     grid-column: 2 / 4;
+
+    .footer-content {
+      width: 90%;
+      margin: 0 auto;
+      padding: 6px 0;
+      border-top: 1px rgb(232, 237, 235) solid;
+      color: rgb(136, 147, 151);
+      text-align: center;
+    }
   }
 }
