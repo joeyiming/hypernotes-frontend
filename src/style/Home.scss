@@ -3,8 +3,30 @@
 .Home {
   margin: 0;
   padding: 0;
+  display: grid;
+  grid-template-rows: 1fr 9fr 1fr;
+  grid-template-columns: 1fr 3fr;
+  width: 100vw;
+  height: 100vh;
 
   header {
     background-color: $color-background;
+    grid-column: 1 / 4;
+  }
+
+  aside {
+    background-color: $color-primary;
+    grid-row: 2 / 4;
+  }
+
+  main {
+    background-color: $color-secondary;
+    grid-column: 2 / 4;
+  }
+
+  footer {
+    background-color: $color-description;
+    grid-row: 3 / 3;
+    grid-column: 2 / 4;
   }
 }
