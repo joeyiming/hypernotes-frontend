@@ -1,15 +1,75 @@
-$color-primary: rgba(59, 101, 194, 1);
-$color-description: white;
+$color-primary: #fdf251;
+$color-secondary: #567076;
+$color-description: #454745;
+$color-background: #f1f3f2;
+// 黑体，无衬线体
+$font-main: 'Roboto',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  'PingFang SC',
+  'Hiragino Sans GB',
+  'Microsoft YaHei',
+  'Helvetica Neue',
+  Helvetica,
+  Arial,
+  sans-serif,
+  'Apple Color Emoji',
+  'Segoe UI Emoji',
+  'Segoe UI Symbol';
+// 宋体，衬线体
+$font-special: Georgia,
+  'Source Han Serif SC',
+  STZhongsong,
+  'Times New Roman',
+  Times,
+  PMingLiu,
+  STSong,
+  SimSun,
+  'WenQuanYi Bitmap Song',
+  'Noto Serif CJK',
+  serif,
+  'Apple Color Emoji',
+  'Segoe UI Emoji',
+  'Segoe UI Symbol';
+// 粗黑字体
+$font-bold: "SF Pro SC",
+  "SF Pro Display",
+  "SF Pro Icons",
+  "PingFang SC",
+  "Helvetica Neue",
+  "Helvetica",
+  "Arial",
+  sans-serif;
+$font-code: JetBrainsMono,
+  'Source Code Pro',
+  Monaco,
+  Menlo,
+  Consolas,
+  'Courier New',
+  Courier,
+  monospace;
 
 .App {
   display: flex;
+  font-family: $font-main;
 }
 
 a {
   text-decoration: none;
 }
 
+p {
+  margin: 0;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
 .left {
+  background-color: $color-background;
   width: 30vw;
   height: 100vh;
   flex: initial;
@@ -20,10 +80,25 @@ a {
 .left-header {
   min-height: 20vh;
   flex: initial;
+  font-family: $font-special;
 
   .title {
     text-align: center;
-    color: $color-primary;
+    color: $color-description;
+    position: relative;
+    z-index: 100;
+
+    &:after {
+      $width: 200px;
+      content: '';
+      position: absolute;
+      z-index: -1;
+      width: $width;
+      height: 1rem;
+      left: calc(50% - 0.5 * $width);
+      bottom: 0;
+      background-color: $color-primary;
+    }
   }
 }
 
@@ -47,6 +122,16 @@ a {
   justify-content: center;
   align-items: center;
   gap: .6rem;
+
+  label {
+    align-self: flex-start;
+    font-weight: bold;
+    color: rgb(61, 79, 88, 0.8);
+
+    &:hover {
+      color: rgb(61, 79, 88, 1);
+    }
+  }
 }
 
 .form-input {
@@ -54,69 +139,107 @@ a {
   height: 2rem;
   border: 1px rgba($color: #000000, $alpha: 0.4) solid;
   border-radius: 8px;
+  padding: 1px .4rem;
 }
 
 .form-input:hover {
   border: 1px rgba($color: #000000, $alpha: 1.0) solid;
 }
 
-.register {
-  margin-top: .5rem;
-  font-size: 12px;
-  opacity: .6;
-}
-
-button#submit {
-  border: 1px rgba($color: #000000, $alpha: 0.4) solid;
+.form-footer {
   width: 100%;
-  height: 2rem;
-  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
 }
 
-button#submit:hover {
+.loginOrRegister {
+  margin-top: .5rem;
+  font-size: 13 px;
+  opacity: .6;
+  border: unset;
+  background-color: unset;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.btn {
+  border: 1px rgba($color: #000000, $alpha: 0.4) solid;
+  width: 100px;
+  height: fit-content;
+  margin: 1rem 0;
+  padding: .4rem .4rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: white;
+  background-color: $color-secondary;
+}
+
+.btn:hover {
   border: 1px rgba($color: #000000, $alpha: 1.0) solid;
 }
 
 
 .right {
   flex: auto;
-  // background-image: url('../public/landing-page.png');
-  background-image: url('../public/landing-page.png');
+  background-image: url('../public/ge.jpg');
   background-size: cover;
   background-position: center;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: left;
   justify-content: left;
-  font-size: calc(10px + 2vmin);
-  color: $color-description;
+  position: relative;
+
 
   &-body {
     width: 60%;
-    flex: auto;
-    padding: 5vmin 6vmin;
+    position: absolute;
+    // 放在右下角
+    // right: 6vmin;
+    // bottom: 10vmin;
+    // 放在左上角
+    top: 6vmin;
+    left: 6vmin;
+    padding: 0;
   }
 
   a.more {
-    color: $color-description;
+    color: $color-primary;
     padding-bottom: .2rem;
-    border-bottom: 1px $color-description solid;
+    font-size: 1.4rem;
+    font-weight: 500;
+
+    &:hover {
+      border-bottom: 2px solid;
+      border-color: #{color};
+    }
   }
 }
 
+.text-wrapper {
+  padding: .5rem .5rem 1rem;
+  background-color: rgba($color: $color-secondary, $alpha: 0.6);
 
-.title {
-  font-size: 2rem;
-  font-weight: 800;
+  .title {
+    font-family: $font-bold;
+    font-size: 48px;
+    color: white;
+  }
+
+  p,
+  a {
+    margin: .5rem 1rem;
+  }
+
+  .description {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+  }
 }
-
-.description {
-  font-weight: 300;
-  font-size: 1.2rem;
-}
-
-
 
 /* 默认样式 */
 
