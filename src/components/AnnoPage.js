@@ -4,7 +4,7 @@ function AnnoPage() {
   return (
     <main id='Anno'>
       <form id='search-bar'>
-        <input id='search' type='text' defaultValue='搜索' />
+        <input id='search' type='text' placeholder='搜索' />
       </form>
       <div className='anno-header'>
         <div className='anno-user'>Joey</div>

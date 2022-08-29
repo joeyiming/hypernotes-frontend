@@ -1,12 +1,12 @@
 .btn {
   border: 1px rgba($color: #000000, $alpha: 0.4) solid;
-  
+
   height: fit-content;
   margin: 0 .5rem;
   border-radius: 8px;
 
   color: white;
-  background-color: $color-secondary;
+  background-color: rgba($color: $color-secondary, $alpha: .9);
   cursor: pointer;
 
   &-big {
@@ -19,5 +19,20 @@
     width: 4rem;
     padding: .4rem .2rem;
     font-size: .8rem;
+  }
+
+  &:hover {
+    background-color: rgba($color: $color-secondary, $alpha: 1);
+  }
+}
+
+form#search-bar {
+  
+  input {
+    width: 100%;
+    height: 100%;
+    font-size: 1rem;
+    padding: .5rem;
+    font-family: $font-main;
   }
 }

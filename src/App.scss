@@ -22,6 +22,7 @@ p {
 .left {
   background-color: $color-background;
   width: 30vw;
+  min-width: 400px;
   height: 100vh;
   flex: initial;
   display: flex;
@@ -153,7 +154,24 @@ p {
     padding: 0;
   }
 
-  a.more {
+}
+
+.text-wrapper {
+  padding: .5rem .5rem 1rem;
+  background-color: rgba($color: $color-secondary, $alpha: 0.6);
+
+  .title {
+    font-family: $font-bold;
+    font-size: 36px;
+    color: white;
+  }
+
+  p,
+  a {
+    margin: .5rem 1rem;
+  }
+
+  .more {
     color: $color-primary;
     padding-bottom: .2rem;
     font-size: 1.4rem;
@@ -163,22 +181,6 @@ p {
       border-bottom: 2px solid;
       border-color: #{color};
     }
-  }
-}
-
-.text-wrapper {
-  padding: .5rem .5rem 1rem;
-  background-color: rgba($color: $color-secondary, $alpha: 0.6);
-
-  .title {
-    font-family: $font-bold;
-    font-size: 48px;
-    color: white;
-  }
-
-  p,
-  a {
-    margin: .5rem 1rem;
   }
 
   .description {
@@ -214,6 +216,22 @@ p {
 }
 
 /* 响应式设计 */
+
+@media (max-width: 920px) {
+  .text-wrapper {
+    .title {
+      font-size: 28px;
+    }
+
+    .description {
+      font-size: 18px;
+    }
+
+    .more {
+      font-size: 16px;
+    }
+  }
+}
 
 @media (max-width: 800px) {
   .left {

@@ -7,8 +7,8 @@ function GroupPage() {
       <div className='header'>
         <div className='title'>我的小组</div>
         <div className='wrapper'>
-          <form>
-            <input type='text' />
+          <form id='search-bar'>
+            <input type='text' placeholder='搜索'/>
           </form>
           <button className='btn btn-big'>创建新小组</button>
         </div>
