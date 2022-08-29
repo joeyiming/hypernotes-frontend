@@ -10,6 +10,7 @@ import reportWebVitals from './reportWebVitals';
 import Profile from './components/Profile';
 import Options from './components/Options';
 import GroupPage from './components/GroupPage';
+import About from './components/About';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -25,6 +26,7 @@ root.render(
             <Route path='options' element={<Options />} />
           </Route>
         </Route>
+        <Route path='about' element={<About />} />
       </Routes>
     </Router>
     {/* <App /> */}

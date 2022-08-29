@@ -1,0 +1,43 @@
+@import './variables';
+
+main#About {
+  height: 100vh;
+  width: 100vw;
+  background-color: $color-background;
+  display: grid;
+  place-items: center;
+
+  .back {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    color: rgba($color: $color-description, $alpha: 0.8);
+    padding-bottom: 4px;
+
+    &:hover {
+      border-bottom: 1px solid rgba($color: $color-description, $alpha: 0.8);
+    }
+  }
+
+  .About {
+    width: 60%;
+    margin: 0 auto;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    border-radius: .6rem;
+
+    .header {
+      font-size: 32px;
+      border-bottom: 1px $color-description solid;
+      padding: 1rem;
+      text-align: center;
+      font-family: $font-special;
+      font-weight: 800;
+    }
+
+    .body {
+      font-size: 18px;
+      margin: 1.6rem 1rem;
+      font-family: $font-main;
+    }
+  }
+}

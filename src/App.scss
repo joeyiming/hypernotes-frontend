@@ -7,6 +7,7 @@
 
 a {
   text-decoration: none;
+  color: unset;
 }
 
 p {
@@ -57,6 +58,8 @@ p {
   margin: 0 auto;
   padding: 2rem;
   flex: auto;
+
+
 }
 
 .left-footer {
@@ -82,38 +85,48 @@ p {
       color: rgb(61, 79, 88, 1);
     }
   }
-}
 
-.form-input {
-  width: 100%;
-  height: 2rem;
-  border: 1px rgba($color: #000000, $alpha: 0.4) solid;
-  border-radius: 8px;
-  padding: 1px .4rem;
-}
+  .form-footer {
+    margin-top: .5rem;
+  }
 
-.form-input:hover {
-  border: 1px rgba($color: #000000, $alpha: 1.0) solid;
-}
+  .btn {
+    margin-left: 0;
+  }
 
-.form-footer {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
+  .form-input {
+    width: 100%;
+    height: 2rem;
+    border: 1px rgba($color: #000000, $alpha: 0.4) solid;
+    border-radius: 8px;
+    padding: 1px .4rem;
+  }
 
-.loginOrRegister {
-  margin-top: .5rem;
-  font-size: 13 px;
-  opacity: .6;
-  border: unset;
-  background-color: unset;
-  cursor: pointer;
+  .form-input:hover {
+    border: 1px rgba($color: #000000, $alpha: 1.0) solid;
+  }
 
-  &:hover {
-    opacity: 1;
+  .form-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .loginOrRegister {
+    margin-top: .5rem;
+    font-size: 13 px;
+    opacity: .6;
+    border: unset;
+    background-color: unset;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }
+
+
 
 
 .right {

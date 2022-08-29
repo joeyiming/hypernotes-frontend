@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import '../App.scss'
 
 function Landing() {
@@ -10,14 +11,9 @@ function Landing() {
           <p className='description'>
             在任何网页标注信息，记录笔记并分享给你的团队，无需安装客户端，只需要一个浏览器！
           </p>
-          <a
-            className="more"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Link className="more" to='/about'>
             进一步了解 >
-          </a>
+          </Link>
         </div>
       </div>
     </div>
