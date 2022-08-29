@@ -1,13 +1,13 @@
 import React from 'react'
 import logo from '../logo.svg'
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 function UserPage() {
   return (
-    <main>
+    <main id='User'>
       <div className='user-header'>
         <div className='user-avatar'>
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} alt="logo" />
         </div>
         <div className='user-name'>
           Joey
@@ -15,12 +15,12 @@ function UserPage() {
       </div>
       <div className='user-body'>
         <nav className='user-nav'>
-          <div className='nav-profile'>
+          <Link className='nav nav-profile' to='profile'>
             个人资料
-          </div>
-          <div className='nav-security'>
+          </Link>
+          <Link className='nav nav-security' to='options'>
             安全设置
-          </div>
+          </Link>
         </nav>
         <div className='content'>
           <Outlet />

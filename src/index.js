@@ -8,6 +8,8 @@ import UserPage from './components/UserPage';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Profile from './components/Profile';
+import Options from './components/Options';
+import GroupPage from './components/GroupPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,8 +19,10 @@ root.render(
         <Route path='/' element={<App />} />
         <Route path='home' element={<Home />}>
           <Route path='anno' element={<AnnoPage />} />
+          <Route path='group' element={<GroupPage />} />
           <Route path='user' element={<UserPage />}>
             <Route path='profile' element={<Profile />} />
+            <Route path='options' element={<Options />} />
           </Route>
         </Route>
       </Routes>

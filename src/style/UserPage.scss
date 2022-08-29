@@ -1,0 +1,120 @@
+@import "./variables";
+
+main#User {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+  .user-header {
+    background-image: url("../../public/internet.jpg");
+    height: 180px;
+    padding: 10px 0 0;
+    display: flex;
+    flex-direction: column;
+
+    .user-avatar {
+      width: 100px;
+      height: 100px;
+      margin: .4rem auto;
+      flex: initial;
+      display: grid;
+      place-items: center;
+
+      img {
+        height: inherit;
+        width: inherit;
+        margin: 0 auto;
+        background-color: rgba($color: white, $alpha: 1.0);
+        border-radius: 64px;
+      }
+    }
+
+    .user-name {
+      flex: auto;
+      font-family: $font-special;
+      font-size: 2em;
+      text-align: center;
+      color: white;
+    }
+  }
+
+  .user-body {
+    padding: 2vmin;
+
+    .user-nav {
+      width: 60%;
+      margin: 0 auto;
+      padding: .5rem 1rem;
+      display: flex;
+      gap: 20px;
+      font-size: 1.2rem;
+
+      .nav {
+        color: unset;
+        padding-bottom: .5rem;
+        border-bottom: 2px rgba($color: $color-primary, $alpha: 0) solid;
+
+        &:hover {
+          border-color: rgba($color: $color-secondary, $alpha: .5);
+        }
+      }
+
+      .activated {
+        border-color: rgba($color: $color-primary, $alpha: 1);
+      }
+    }
+
+    .account {
+      width: 60%;
+      margin: 0 auto;
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+
+        .session {
+          display: flex;
+          flex-direction: column;
+          padding-bottom: 1rem;
+
+          &:not(:last-child) {
+            border-bottom: 2px $color-background solid;
+          }
+
+          label {
+            color: $color-secondary;
+            font-size: .8rem;
+            font-weight: bold;
+            margin-bottom: .8rem;
+          }
+
+          input,
+          textarea {
+            background-color: rgba($color: $color-background, $alpha: .2);
+            border: 1px $color-background solid;
+            padding: .8rem;
+            font-size: 1rem;
+            font-family: $font-main;
+          }
+
+          .btn-wrapper{
+            .btn {
+              margin-left: 0;
+              font-weight: 800;
+            }
+
+            & button:nth-child(2) {
+              background-color: unset;
+              border: unset;
+              color: black;
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+}

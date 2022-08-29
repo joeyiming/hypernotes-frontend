@@ -13,7 +13,7 @@ function LoginForm({ handleLogin, changePage, username, setUsername, password, s
         <label htmlFor='password'>密码</label>
         <input id="password" className='form-input' type="password" value={password} onChange={({ target }) => { setPassword(target.value) }} />
         <div className='form-footer'>
-          <button className='btn btn-login' type='submit' onClick={handleLogin}>登录</button>
+          <button className='btn btn-big btn-login' type='submit' onClick={handleLogin}>登录</button>
           <button className='loginOrRegister' onClick={changePage}>没有账号？点击注册</button>
         </div>
       </form>

@@ -32,6 +32,16 @@ function AnnoPage() {
             <div className='anno-title'>【安利！】这些游戏竟然都是「一个人」做的？｜小宁子</div>
             <div className='anno-count'>3</div>
           </div>
+          <div className='anno-item'>
+            <div className='anno-source'>bilibili.com</div>
+            <div className='anno-title'>【安利！】这些游戏竟然都是「一个人」做的？｜小宁子</div>
+            <div className='anno-count'>3</div>
+          </div>
+          <div className='anno-item'>
+            <div className='anno-source'>bilibili.com</div>
+            <div className='anno-title'>【安利！】这些游戏竟然都是「一个人」做的？｜小宁子</div>
+            <div className='anno-count'>3</div>
+          </div>
         </div>
       </div>
     </main>

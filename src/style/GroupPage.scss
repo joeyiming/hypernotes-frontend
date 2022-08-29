@@ -1,0 +1,63 @@
+@import './variables';
+@import './tools';
+@import './Home.scss';
+
+main#Group {
+  .header {
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      font-weight: unset;
+    }
+
+    .wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1rem 0;
+
+      input {
+        padding: .3rem 1rem;
+        font-size: .9rem;
+      }
+    }
+  }
+
+  .card {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 1rem;
+    padding: 1rem;
+
+    &-header {
+      border-bottom: 1px gray solid;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: .5rem;
+
+      .group-name {
+        color: $color-secondary;
+        font-weight: bold;
+        font-size: 1rem;
+      }
+
+      .group-btns {
+        button {
+          font-size: .8rem;
+        }
+      }
+    }
+
+    &-body {
+      border-bottom: 1px gray solid;
+      padding-top: 1rem;
+    }
+
+    &-footer {
+      padding-top: 1rem;
+    }
+
+  }
+
+}
