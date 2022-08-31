@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../App.scss';
 import logo from '../logo.svg';
 import loginService from '../services/login';
+import registerService from '../services/register';
 
 function LoginForm({ handleLogin, changePage, username, setUsername, password, setPassword }) {
   return (
@@ -20,6 +21,7 @@ function LoginForm({ handleLogin, changePage, username, setUsername, password, s
 }
 
 function RegisterForm({ handleRegister, changePage, username, setUsername, password, setPassword }) {
+  const [repwd, setRepwd] = useState('');
   return (
     <form className='form' onSubmit={handleRegister}>
       <label htmlFor='name'>用户名</label>
@@ -27,7 +29,7 @@ function RegisterForm({ handleRegister, changePage, username, setUsername, passw
       <label htmlFor='password'>密码</label>
       <input id="password" className='form-input' type="password" value={password} onChange={({ target }) => { setPassword(target.value) }} />
       <label htmlFor='re-password'>请再次确认你的密码</label>
-      <input id="re-password" className='form-input' type="password" value={password} onChange={({ target }) => { setPassword(target.value) }} />
+      <input id="re-password" className='form-input' type="password" value={repwd} onChange={({ target }) => { setRepwd(target.value) }} />
       <div className='form-footer'>
         <button className='btn btn-big' type='submit'>注册</button>
         <button className='loginOrRegister' onClick={changePage}>返回登录</button>
@@ -51,18 +53,31 @@ function Login() {
     try {
       loginService.login({ username, setUsername, password, setPassword, user, setUser, error, setError });
       if (user !== null) {
-        console.log('登录成功：',user);
+        console.log('登录成功：', user);
         navigate('/home');
       } else {
         alert(error);
       }
     } catch (exception) {
-      console.error('Login Failed');
+      console.error('登录失败');
     }
   }
 
   const handleRegister = (e) => {
-
+    e.preventDefault()
+    console.log('注册中');
+    try {
+      setError('');
+      registerService.register({ username, setUsername, password, setPassword, user, setUser, error, setError });
+      if (error){
+        console.error(error);
+      }
+      if (user){
+        console.log(user);
+      }
+    } catch (exception) {
+      console.error('[注册失败]',exception);
+    }
   }
 
   const changePage = (e) => {
