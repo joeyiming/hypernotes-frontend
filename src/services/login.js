@@ -1,11 +1,25 @@
 import axios from 'axios'
-const baseUrl = '/api/login'
+const baseUrl = 'http://localhost:3001'
 
-const login = async credentials => {
-  // const response = await axios.post(baseUrl, credentials)
-  // return response.data
-  const response = {...credentials}
-  return response
+function findUserByName(username, users) {
+  let result = users.filter(user => user.username === username);
+  return result.length === 1 ? result[0] : null;
+}
+
+const login = props => {
+  axios.get(baseUrl + '/users').then(response => {
+    let users = response.data;
+    let user = findUserByName(props.username, users);
+    if (user === null){
+      props.setError('用户名不存在');
+      return;
+    }
+    if (user.password !== props.password){
+      props.setError('密码错误');
+      return;
+    }
+    props.setUser(user);
+  });
 }
 
 export default { login }

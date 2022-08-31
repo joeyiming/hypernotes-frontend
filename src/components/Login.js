@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import '../App.scss'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../App.scss';
 import logo from '../logo.svg';
-import Home from './Home';
+import loginService from '../services/login';
 
 function LoginForm({ handleLogin, changePage, username, setUsername, password, setPassword }) {
   return (
@@ -38,8 +38,33 @@ function RegisterForm({ handleRegister, changePage, username, setUsername, passw
 }
 
 
-function Login(props) {
+function Login() {
   const [showRegister, setShowRegister] = useState(false);
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async e => {
+    e.preventDefault()
+    try {
+      loginService.login({ username, setUsername, password, setPassword, user, setUser, error, setError });
+      if (user !== null) {
+        console.log('登录成功：',user);
+        navigate('/home');
+      } else {
+        alert(error);
+      }
+    } catch (exception) {
+      console.error('Login Failed');
+    }
+  }
+
+  const handleRegister = (e) => {
+
+  }
+
   const changePage = (e) => {
     setShowRegister(!showRegister);
   }
@@ -53,7 +78,9 @@ function Login(props) {
         </div>
       </div>
       <div className='left-body'>
-        {showRegister ? <RegisterForm changePage={changePage} handleRegister={props.handleRegister} username={props.username} setUsername={props.setUsername} password={props.password} setPassword={props.setPassword} /> : <LoginForm changePage={changePage} handleLogin={props.handleLogin} username={props.username} setUsername={props.setUsername} password={props.password} setPassword={props.setPassword} />}
+        {showRegister ?
+          <RegisterForm changePage={changePage} handleRegister={handleRegister} username={username} setUsername={setUsername} password={password} setPassword={setPassword} /> :
+          <LoginForm changePage={changePage} handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}
       </div>
       <div className='left-footer'>Made with ❤️ by Joey</div>
     </div>
