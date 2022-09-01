@@ -4,10 +4,11 @@
 @import "./UserPage.scss";
 
 .Home {
+  $header-height: 56px;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-rows: 56px 9fr 1fr;
+  grid-template-rows: $header-height 9fr 1fr;
   grid-template-columns: 1fr 6fr;
   width: 100vw;
   height: 100vh;
@@ -29,9 +30,11 @@
       display: flex;
       gap: 20px;
       align-items: center;
+      justify-items: center;
       font-size: 1.2rem;
       font-family: $font-main;
       margin-right: 5vmin;
+      height: 100%;
 
       button {
         border: unset;
@@ -46,9 +49,26 @@
         border-bottom: 3px solid;
         color: $color-secondary;
         border-color: rgba($color: $color-secondary, $alpha: 0);
+        height: $header-height;
+        line-height: $header-height;
 
         &:hover {
-          border-color: rgba($color: $color-secondary, $alpha: 0.7);
+          // border-color: rgba($color: $color-secondary, $alpha: 0.7);
+
+          .dropdown {
+            display: block;
+          }
+        }
+
+        .dropdown {
+          display: none;
+          position: absolute;
+          line-height: initial;
+          top: 56px;
+          padding: 8px;
+          box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+          background-color: #fff;
+          min-width: 100px;
         }
       }
     }
@@ -78,8 +98,7 @@
         text-align: left;
         color: inherit;
 
-        &:hover {
-          color: rgba($color: #016bf8, $alpha: 1);
+        &:hover { 
           background-color: rgba($color: $color-secondary, $alpha: .2);
         }
       }

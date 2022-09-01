@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import '../App.scss';
 import logo from '../logo.svg';
 import loginService from '../services/login';
-import { findUserByName } from '../services/utils';
 
 function LoginForm({ handleLogin, changePage, username, setUsername, password, setPassword }) {
   return (
@@ -51,6 +50,7 @@ function Login() {
   const [displayName, setDisplayName] = useState('');
   const navigate = useNavigate();
 
+  // 如果已登录，跳转到 /home
   useEffect(() => {
     if (localStorage.getItem('username')) {
       navigate('/home');
@@ -63,7 +63,7 @@ function Login() {
     try {
       loginService.getAllUsers().then(response => {
         let users = response.data;
-        let user = findUserByName(username, users);
+        let user = loginService.findUserByName(username, users);
         if (user === null) {
           setError('用户名不存在');
           throw error;
@@ -91,7 +91,7 @@ function Login() {
       setError('');
       loginService.getAllUsers().then(response => {
         let users = response.data;
-        if (findUserByName(username, users)) {
+        if (loginService.findUserByName(username, users)) {
           setError('用户名已被占用');
           throw error;
         }
