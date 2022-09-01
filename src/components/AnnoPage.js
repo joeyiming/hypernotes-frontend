@@ -1,13 +1,14 @@
 import React from 'react'
 
 function AnnoPage() {
+  const username = localStorage.getItem('username');
   return (
     <main id='Anno'>
       <form id='search-bar'>
         <input id='search' type='text' placeholder='搜索' />
       </form>
       <div className='anno-header'>
-        <div className='anno-user'>Joey</div>
+        <div className='anno-user'>{username}</div>
       </div>
       <div className='anno-body'>
         <div className='anno-sum'>总计 <span className='anno-num'>230</span> 条标注</div>

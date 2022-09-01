@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../App.scss';
 import logo from '../logo.svg';
 import loginService from '../services/login';
-import registerService from '../services/register';
+import { findUserByName } from '../services/utils';
 
 function LoginForm({ handleLogin, changePage, username, setUsername, password, setPassword }) {
   return (
@@ -20,11 +20,13 @@ function LoginForm({ handleLogin, changePage, username, setUsername, password, s
   );
 }
 
-function RegisterForm({ handleRegister, changePage, username, setUsername, password, setPassword }) {
+function RegisterForm({ handleRegister, changePage, username, setUsername, password, setPassword, displayName, setDisplayName }) {
   const [repwd, setRepwd] = useState('');
   return (
     <form className='form' onSubmit={handleRegister}>
-      <label htmlFor='name'>用户名</label>
+      <label htmlFor='dname'>显示名</label>
+      <input id="dname" className='form-input' type="text" value={displayName} onChange={({ target }) => { setDisplayName(target.value) }} />
+      <label htmlFor='name'>用户名<span>（英文数字或下划线）</span></label>
       <input id="name" className='form-input' type="text" value={username} onChange={({ target }) => { setUsername(target.value) }} />
       <label htmlFor='password'>密码</label>
       <input id="password" className='form-input' type="password" value={password} onChange={({ target }) => { setPassword(target.value) }} />
@@ -46,20 +48,39 @@ function Login() {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null);
   const [error, setError] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async e => {
+  useEffect(() => {
+    if (localStorage.getItem('username')) {
+      navigate('/home');
+    }
+  }, [])
+
+  const handleLogin = e => {
     e.preventDefault()
+    console.log('登录中');
     try {
-      loginService.login({ username, setUsername, password, setPassword, user, setUser, error, setError });
-      if (user !== null) {
-        console.log('登录成功：', user);
-        navigate('/home');
-      } else {
-        alert(error);
-      }
+      loginService.getAllUsers().then(response => {
+        let users = response.data;
+        let user = findUserByName(username, users);
+        if (user === null) {
+          setError('用户名不存在');
+          throw error;
+        }
+        if (user.password !== password) {
+          setError('密码错误');
+          throw error;
+        }
+        setUser(user);
+        localStorage.setItem('username', user.username);
+        localStorage.setItem('dname', user.displayName);
+        console.log('登录成功');
+        navigate(`/home`);
+      });
+
     } catch (exception) {
-      console.error('登录失败');
+      console.error('登录失败', exception);
     }
   }
 
@@ -68,15 +89,27 @@ function Login() {
     console.log('注册中');
     try {
       setError('');
-      registerService.register({ username, setUsername, password, setPassword, user, setUser, error, setError });
-      if (error){
-        console.error(error);
-      }
-      if (user){
-        console.log(user);
-      }
+      loginService.getAllUsers().then(response => {
+        let users = response.data;
+        if (findUserByName(username, users)) {
+          setError('用户名已被占用');
+          throw error;
+        }
+        const newUser = {
+          username: username,
+          password: password,
+          email: '',
+          groups: '',
+          display_name: displayName
+        };
+
+        loginService.createUser(newUser).then(resposne => {
+          setUser(newUser);
+          setShowRegister(!showRegister);
+        });
+      });
     } catch (exception) {
-      console.error('[注册失败]',exception);
+      console.error('[注册失败]', exception);
     }
   }
 
@@ -94,7 +127,7 @@ function Login() {
       </div>
       <div className='left-body'>
         {showRegister ?
-          <RegisterForm changePage={changePage} handleRegister={handleRegister} username={username} setUsername={setUsername} password={password} setPassword={setPassword} /> :
+          <RegisterForm changePage={changePage} handleRegister={handleRegister} username={username} setUsername={setUsername} password={password} setPassword={setPassword} displayName={displayName} setDisplayName={setDisplayName} /> :
           <LoginForm changePage={changePage} handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}
       </div>
       <div className='left-footer'>Made with ❤️ by Joey</div>

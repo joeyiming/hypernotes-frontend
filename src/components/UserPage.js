@@ -3,6 +3,8 @@ import logo from '../logo.svg'
 import { Link, Outlet } from 'react-router-dom'
 
 function UserPage() {
+  const username = localStorage.getItem('username')
+  const dname = localStorage.getItem('dname')
   return (
     <main id='User'>
       <div className='user-header'>
@@ -10,7 +12,7 @@ function UserPage() {
           <img src={logo} alt="logo" />
         </div>
         <div className='user-name'>
-          Joey
+          {dname|| username}
         </div>
       </div>
       <div className='user-body'>
