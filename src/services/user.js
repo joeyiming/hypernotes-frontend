@@ -5,6 +5,10 @@ const getAllUsers = () => {
   return axios.get(baseUrl);
 }
 
+const getUserById = (id) => {
+  return axios.get(baseUrl+`/${id}`);
+}
+
 const createUser = (newUser) => {
   return axios.post(baseUrl, newUser);
 }
@@ -19,4 +23,4 @@ const findUserByName = (username, users) => {
 }
 
 
-export default { getAllUsers: getAllUsers, createUser: createUser, findUserByName: findUserByName, updateUser:updateUser }
+export default { getAllUsers: getAllUsers, createUser: createUser, findUserByName: findUserByName, updateUser:updateUser, getUserById:getUserById }

@@ -52,7 +52,7 @@ function Login() {
 
   // 如果已登录，跳转到 /home
   useEffect(() => {
-    if (localStorage.getItem('username')) {
+    if (localStorage.getItem('user')) {
       navigate('/home');
     }
   }, [])
