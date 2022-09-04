@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Hypernotes",
+  "name": "Web Annotation System: Hypernotes",
   "icons": [
     {
       "src": "favicon.ico",
