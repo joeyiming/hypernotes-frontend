@@ -3,14 +3,51 @@ import { useNavigate } from 'react-router-dom';
 import '../App.scss';
 import logo from '../logo.svg';
 import userService from '../services/user';
+import Captcha from './Captcha';
+import axios from 'axios';
 
-function LoginForm({ handleLogin, changePage, username, setUsername, password, setPassword }) {
+function LoginForm({ changePage }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [checkCaptcha, setCheckCaptcha] = useState(false);
+  const navigate = useNavigate();
+
+  const handleCheck = () => {
+    console.log(checkCaptcha);
+    setCheckCaptcha(true)
+  }
+
+  const handleLogin = e => {
+    e.preventDefault()
+    console.log('登录中');
+    try {
+      userService.getAllUsers().then(response => {
+        let users = response.data;
+        const user = userService.findUserByName(username, users);
+        if (user === null) {
+          console.error('用户名不存在');
+        }
+        if (user.password !== password) {
+          console.error('密码错误');
+        }
+        localStorage.setItem('user', JSON.stringify(user));
+        console.log(localStorage.getItem('user'));
+        console.log('登录成功');
+        navigate(`/home`);
+      });
+
+    } catch (exception) {
+      console.error('登录失败', exception);
+    }
+  }
+
   return (
     <form className='form' onSubmit={handleLogin}>
       <label htmlFor='name'>用户名</label>
       <input id="name" className='form-input' type="text" value={username} onChange={({ target }) => { setUsername(target.value) }} />
       <label htmlFor='password'>密码</label>
       <input id="password" className='form-input' type="password" value={password} onChange={({ target }) => { setPassword(target.value) }} />
+      <Captcha checkCaptcha={checkCaptcha} onCheck={handleCheck} />
       <div className='form-footer'>
         <button className='btn btn-big btn-login' type='submit' onClick={handleLogin}>登录</button>
         <button className='loginOrRegister' onClick={changePage}>没有账号？点击注册</button>
@@ -19,8 +56,40 @@ function LoginForm({ handleLogin, changePage, username, setUsername, password, s
   );
 }
 
-function RegisterForm({ handleRegister, changePage, username, setUsername, password, setPassword, displayName, setDisplayName, repwd, setRepwd }) {
-  
+function RegisterForm({ changePage, showRegister, setShowRegister }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [repwd, setRepwd] = useState('');
+  const [displayName, setDisplayName] = useState('');
+
+  const handleRegister = (e) => {
+    e.preventDefault()
+    try {
+      if (password !== repwd) {
+        console.error('两次输入的密码不同');
+      }
+
+      userService.getAllUsers().then(response => {
+        let users = response.data;
+        if (userService.findUserByName(username, users)) {
+          console.error('用户名已被占用');
+        }
+        const newUser = {
+          name: username,
+          password: password,
+          email: '',
+          displayName: displayName
+        };
+
+        userService.createUser(newUser).then(response => {
+          changePage();
+        });
+      });
+    } catch (exception) {
+      console.error('[注册失败]', exception);
+    }
+  }
+
   return (
     <form className='form' onSubmit={handleRegister}>
       <label htmlFor='dname'>显示名</label>
@@ -43,79 +112,13 @@ function RegisterForm({ handleRegister, changePage, username, setUsername, passw
 
 function Login() {
   const [showRegister, setShowRegister] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [repwd, setRepwd] = useState('');
-  const [error, setError] = useState('');
-  const [displayName, setDisplayName] = useState('');
   const navigate = useNavigate();
-
   // 如果已登录，跳转到 /home
   useEffect(() => {
     if (localStorage.getItem('user')) {
       navigate('/home');
     }
   }, [])
-
-  const handleLogin = e => {
-    e.preventDefault()
-    console.log('登录中');
-    try {
-      userService.getAllUsers().then(response => {
-        let users = response.data;
-        console.log(users);
-        console.log(username);
-        const user = userService.findUserByName(username, users);
-        if (user === null) {
-          setError('用户名不存在');
-          throw error;
-        }
-        if (user.password !== password) {
-          setError('密码错误');
-          throw error;
-        }
-        localStorage.setItem('user',JSON.stringify(user));
-        console.log(localStorage.getItem('user'));
-        console.log('登录成功');
-        navigate(`/home`);
-      });
-
-    } catch (exception) {
-      console.error('登录失败', exception);
-    }
-  }
-
-  const handleRegister = (e) => {
-    e.preventDefault()
-    console.log('注册中');
-    try {
-      setError('');
-      if (password !== repwd) {
-        setError('两次输入的密码不同');
-        throw error;
-      }
-
-      userService.getAllUsers().then(response => {
-        let users = response.data;
-        if (userService.findUserByName(username, users)) {
-          setError('用户名已被占用');
-          throw error;
-        }
-        const newUser = {
-          name: username,
-          password: password,
-          email: '',
-          displayName: displayName
-        };
-
-        userService.createUser(newUser).then(response => {
-          setShowRegister(!showRegister);
-        });
-      });
-    } catch (exception) {
-      console.error('[注册失败]', exception);
-    }
-  }
 
   const changePage = (e) => {
     setShowRegister(!showRegister);
@@ -131,10 +134,10 @@ function Login() {
       </div>
       <div className='left-body'>
         {showRegister ?
-          <RegisterForm changePage={changePage} handleRegister={handleRegister} username={username} setUsername={setUsername} password={password} setPassword={setPassword} displayName={displayName} setDisplayName={setDisplayName} repwd={repwd} setRepwd={setRepwd} /> :
-          <LoginForm changePage={changePage} handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}
+          <RegisterForm changePage={changePage} /> :
+          <LoginForm changePage={changePage} />}
       </div>
-      <div className='left-footer'>Made with ❤️ by Joey</div>
+      <div className='left-footer'>Made with ❤️ by Youzi</div>
     </div>
   )
 }

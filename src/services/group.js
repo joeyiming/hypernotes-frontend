@@ -14,6 +14,10 @@ const getPairs = () => {
   return axios.get(pairUrl);
 }
 
+const exitGroup = (userId, groupId) => {
+  return axios.delete(pairUrl + `/${userId}/${groupId}`);
+}
+
 const findMembers = (id, pairs) => {
   let members = [];
   for (const pair of pairs) {
@@ -24,4 +28,4 @@ const findMembers = (id, pairs) => {
   return members;
 }
 
-export default { getAllGroups, getGroupById, getPairs, findMembers }
+export default { getAllGroups, getGroupById, getPairs, findMembers, exitGroup }

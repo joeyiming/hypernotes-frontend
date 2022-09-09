@@ -59,8 +59,6 @@ p {
   margin: 0 auto;
   padding: 2rem;
   flex: auto;
-
-
 }
 
 .left-footer {
@@ -84,6 +82,21 @@ p {
 
     &:hover {
       color: rgb(61, 79, 88, 1);
+    }
+  }
+
+  .captcha {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+    .captcha-input input{
+      margin-top: .6rem;
+    }
+
+    .captcha-img svg {
+      width: 130px;
+      height: 100%;
     }
   }
 

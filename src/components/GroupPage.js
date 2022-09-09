@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import groupService from '../services/group'
-import user from '../services/user';
-import userService from '../services/user'
-import '../style/GroupPage.scss'
+import React, { useEffect, useState } from 'react';
+import groupService from '../services/group';
+import userService from '../services/user';
+import '../style/GroupPage.scss';
 
 function GroupMember({ member }) {
   return (
@@ -17,32 +16,40 @@ function GroupMember({ member }) {
   );
 }
 
-function GroupCard({ name,count, members }) {
+function GroupCard({ group, userGroupPairs, setUserGroupPairs }) {
+  const user = JSON.parse(localStorage.getItem('user'));
   const [groupMembers, setGroupMembers] = useState([])
+
   useEffect(() => {
-    console.log('members', members);
-    if (members) {
-      let promises = members.map((member) => userService.getUserById(member.id));
+    // 根据group.members（ID）获取groupMembers（对象，添加type字段）
+    if (group.members) {
+      let promises = group.members.map((member) => userService.getUserById(member.id));
       Promise.allSettled(promises).then((result) => {
         let users = result.map((r) => r.value.data);
-        for (const member of members) {
+        for (const member of group.members) {
           users = users.map(user => user.id === member.id ? { ...user, 'type': member.type } : user)
         }
         setGroupMembers(users);
       })
     }
-  }, [members])
+  }, [group.members])
 
+  const handleExitGroup = (userId, groupId) => {
+    setGroupMembers(groupMembers => groupMembers.filter(member => member.id !== user.id))
+    groupService.exitGroup(userId, groupId).then((response) => {
+      // console.log(response);
+    });
+  }
 
   return (
     <div className='card'>
       <div className='card-header'>
         <div className='group-name'>
-          {name}
+          {group.name}
         </div>
         <div className='group-btns'>
           <button className='btn btn-medium'>管理</button>
-          <button className='btn btn-medium'>退出</button>
+          <button className='btn btn-medium' onClick={() => { handleExitGroup(user.id, group.id) }}>退出</button>
         </div>
       </div>
       <div className='card-body'>
@@ -52,7 +59,7 @@ function GroupCard({ name,count, members }) {
         </ul>
       </div>
       <div className='card-footer'>
-        标注数：<span>{count}</span>
+        标注数：<span>{group.count}</span>
       </div>
     </div>
   );
@@ -68,6 +75,7 @@ function GroupPage() {
     console.log('从服务器获取数据……');
     groupService.getAllGroups().then((response) => {
       setGroups(response.data);
+      console.log('获取小组信息成功');
     })
     groupService.getPairs().then((response) => {
       setUserGroupPairs(response.data);
@@ -81,6 +89,8 @@ function GroupPage() {
         return group;
       })
       setGroups(newGroups);
+      console.log('获取组员信息成功');
+      console.log(newGroups);
     }
   }, [groups, userGroupPairs])
 
@@ -98,7 +108,7 @@ function GroupPage() {
       <div className='body'>
         <div className='cards'>
           {groups && groups[0] ? groups.map((group) => {
-            return <GroupCard key={group.id} name={group.name} count={group.count} members={group.members} />
+            return <GroupCard key={group.id} group={group} userGroupPairs={userGroupPairs} setUserGroupPairs={setUserGroupPairs} />
           }) : 'Loading...'}
         </div>
       </div>
