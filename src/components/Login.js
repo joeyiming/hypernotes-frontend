@@ -4,7 +4,6 @@ import '../App.scss';
 import logo from '../logo.svg';
 import userService from '../services/user';
 import Captcha from './Captcha';
-import axios from 'axios';
 
 function LoginForm({ changePage }) {
   const [username, setUsername] = useState('');
@@ -12,27 +11,26 @@ function LoginForm({ changePage }) {
   const [checkCaptcha, setCheckCaptcha] = useState(false);
   const navigate = useNavigate();
 
-  const handleCheck = () => {
-    console.log(checkCaptcha);
-    setCheckCaptcha(true)
-  }
-
   const handleLogin = e => {
     e.preventDefault()
-    console.log('登录中');
     try {
       userService.getAllUsers().then(response => {
         let users = response.data;
         const user = userService.findUserByName(username, users);
+        if(!checkCaptcha) {
+          console.error('验证码不正确');
+          return
+        }
         if (user === null) {
           console.error('用户名不存在');
+          return
         }
         if (user.password !== password) {
           console.error('密码错误');
+          return
         }
         localStorage.setItem('user', JSON.stringify(user));
         console.log(localStorage.getItem('user'));
-        console.log('登录成功');
         navigate(`/home`);
       });
 
@@ -47,7 +45,7 @@ function LoginForm({ changePage }) {
       <input id="name" className='form-input' type="text" value={username} onChange={({ target }) => { setUsername(target.value) }} />
       <label htmlFor='password'>密码</label>
       <input id="password" className='form-input' type="password" value={password} onChange={({ target }) => { setPassword(target.value) }} />
-      <Captcha checkCaptcha={checkCaptcha} onCheck={handleCheck} />
+      <Captcha checkCaptcha={checkCaptcha} setCheckCaptcha={setCheckCaptcha} />
       <div className='form-footer'>
         <button className='btn btn-big btn-login' type='submit' onClick={handleLogin}>登录</button>
         <button className='loginOrRegister' onClick={changePage}>没有账号？点击注册</button>
@@ -57,6 +55,7 @@ function LoginForm({ changePage }) {
 }
 
 function RegisterForm({ changePage, showRegister, setShowRegister }) {
+  const [checkCaptcha, setCheckCaptcha] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [repwd, setRepwd] = useState('');
@@ -67,12 +66,18 @@ function RegisterForm({ changePage, showRegister, setShowRegister }) {
     try {
       if (password !== repwd) {
         console.error('两次输入的密码不同');
+        return
+      }
+      if (!checkCaptcha) {
+        console.error('验证码不正确');
+        return
       }
 
       userService.getAllUsers().then(response => {
         let users = response.data;
         if (userService.findUserByName(username, users)) {
           console.error('用户名已被占用');
+          return
         }
         const newUser = {
           name: username,
@@ -82,6 +87,7 @@ function RegisterForm({ changePage, showRegister, setShowRegister }) {
         };
 
         userService.createUser(newUser).then(response => {
+          console.log('注册成功');
           changePage();
         });
       });
@@ -100,6 +106,7 @@ function RegisterForm({ changePage, showRegister, setShowRegister }) {
       <input id="password" className='form-input' type="password" value={password} onChange={({ target }) => { setPassword(target.value) }} />
       <label htmlFor='re-password'>请再次确认你的密码</label>
       <input id="re-password" className='form-input' type="password" value={repwd} onChange={({ target }) => { setRepwd(target.value) }} />
+      <Captcha checkCaptcha={checkCaptcha} setCheckCaptcha={setCheckCaptcha} />
       <div className='form-footer'>
         <button className='btn btn-big' type='submit'>注册</button>
         <button className='loginOrRegister' onClick={changePage}>返回登录</button>
@@ -128,9 +135,9 @@ function Login() {
     <div className='left'>
       <div className='left-header'>
         <img src={logo} className="App-logo" alt="logo" />
-        <div className='title'>
+        {showRegister || <div className='title'>
           Hypernotes
-        </div>
+        </div>}
       </div>
       <div className='left-body'>
         {showRegister ?
