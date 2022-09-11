@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import userService from '../services/user'
+import AvatarModal from './AvatarModal';
 
 function Profile() {
   const id = 1;
@@ -7,6 +8,11 @@ function Profile() {
 
   const [displayName, setDisplayName] = useState(user.displayName);
   const [name, setName] = useState(user.name);
+  const [pop, setPop] = useState(false);
+
+  const togglePop = () => {
+    setPop(!pop);
+  }
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +22,7 @@ function Profile() {
       "displayName": displayName
     }
     try {
-      userService.updateUser(id,content).then(response => {
+      userService.updateUser(id, content).then(response => {
         console.log(response);
       })
     } catch (error) {
@@ -38,8 +44,8 @@ function Profile() {
         <div className='session'>
           <label>头像</label>
           <div className='btn-wrapper'>
-            <button id='avatar' className='btn btn-medium'>更改头像</button>
-            <button className='btn btn-medium'>移除头像</button>
+            <button type='button' id='avatar' className='btn btn-medium' onClick={togglePop}>更改头像</button>
+            <button type='button' className='btn btn-medium'>移除头像</button>
           </div>
         </div>
         <div className='session'>
@@ -48,6 +54,7 @@ function Profile() {
         </div>
         <button type='submit' className='btn btn-big btn-submit'>保存</button>
       </form>
+      {pop ? <AvatarModal toggle={togglePop} /> : null}
     </div>
   )
 }

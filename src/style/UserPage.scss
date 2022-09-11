@@ -59,8 +59,8 @@ main#User {
         }
       }
 
-      .activated {
-        border-color: rgba($color: $color-primary, $alpha: 1);
+      .active {
+        border-bottom: 3px rgba($color: $color-secondary, $alpha: .6) solid;
       }
     }
 
@@ -120,4 +120,42 @@ main#User {
 
   }
 
+  // 头像弹窗
+  .modal {
+    position: fixed;
+    height: 300px;
+    width: 360px;
+    top: 40%;
+    left:calc(100% - 0.5 * #{width});
+    z-index: 1;
+    background-color: rgba($color: $color-background, $alpha: 1);
+    color: black;
+
+    &-header {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &-body {
+      height: 200px;
+      width: 200px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background-color: rgba($color: $color-secondary, $alpha: .5);
+      display: grid;
+      place-items: center;
+    }
+
+    input#file-input {
+      position: absolute;
+      top: 21.5px;
+      left: 80px;
+      height: 200px;
+      width: 200px;
+      opacity: 0;
+      cursor: pointer;
+      font-size: 0px;
+      border-radius: 50%;
+    }
+  }
 }
