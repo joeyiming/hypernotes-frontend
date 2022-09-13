@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import userService from '../services/user'
 import AvatarModal from './AvatarModal';
 
 function Profile() {
-  const id = 1;
-  const user = JSON.parse(localStorage.getItem('user'));
+  let user = JSON.parse(localStorage.getItem('user'));
 
   const [displayName, setDisplayName] = useState(user.displayName);
   const [name, setName] = useState(user.name);
+  const [bio, setBio] = useState(user.bio);
   const [pop, setPop] = useState(false);
+
+  // 保持localStorage中的user与程序user一致
+  useEffect(() => {
+    user = { ...user, 'name': name, 'displayName': displayName, 'bio': bio };
+    localStorage.setItem('user', JSON.stringify(user));
+  }, [name, displayName, bio])
+
 
   const togglePop = () => {
     setPop(!pop);
@@ -19,10 +26,11 @@ function Profile() {
     console.log('保存修改中');
     const content = {
       "name": name,
-      "displayName": displayName
+      "displayName": displayName,
+      "bio": bio
     }
     try {
-      userService.updateUser(id, content).then(response => {
+      userService.updateUser(user.id, content).then(response => {
         console.log(response);
       })
     } catch (error) {
@@ -50,7 +58,7 @@ function Profile() {
         </div>
         <div className='session'>
           <label htmlFor='bio'>自我介绍</label>
-          <textarea id='bio' />
+          <textarea id='bio' value={bio} onChange={({ target }) => { setBio(target.value) }} />
         </div>
         <button type='submit' className='btn btn-big btn-submit'>保存</button>
       </form>

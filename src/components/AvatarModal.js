@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import userService from '../services/user';
 
 function AvatarModal({ toggle }) {
+  const user = JSON.parse(localStorage.getItem('user'));
   const [file, setFile] = useState(null);
 
   const onFileChange = (e) => {
@@ -13,12 +15,25 @@ function AvatarModal({ toggle }) {
   }
 
   const onFileUpload = () => {
-    const uploadUrl = 'http://localhost:3001/api/upload'
+    const uploadUrl = 'http://localhost:3001/api/upload';
     let formData = new FormData();
     formData.append('avatar', file, file.name);
-    console.log(file);
+    // 上传头像到服务器
     axios.post(uploadUrl, formData).then((response) => {
-      console.log(response);
+      const status = response.data.status;
+      // 如果上传成功，则更新用户头像地址为服务器存储地址
+      if (status) {
+        const url = response.data.data.url;
+        const content = {
+          'avatarUrl': url
+        }
+        userService.updateUser(user.id, content).then((res) => {
+          console.log(res);
+        })
+      } else {
+        console.log('上传失败');
+      }
+
     })
   }
 

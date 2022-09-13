@@ -68,54 +68,58 @@ main#User {
       width: 60%;
       margin: 0 auto;
 
-      form {
+
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      button.btn-submit {
+        margin: 0 auto;
+      }
+
+      .session {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        padding-bottom: 1rem;
 
-        button.btn-submit {
-          margin: 0 auto;
+        &:not(:last-of-type) {
+          border-bottom: 2px $color-background solid;
         }
 
-        .session {
-          display: flex;
-          flex-direction: column;
-          padding-bottom: 1rem;
+        label {
+          color: $color-secondary;
+          font-size: .8rem;
+          font-weight: bold;
+          margin-bottom: .8rem;
+        }
 
-          &:not(:last-of-type) {
-            border-bottom: 2px $color-background solid;
+        input,
+        textarea {
+          background-color: rgba($color: $color-background, $alpha: .2);
+          border: 1px $color-background solid;
+          padding: .8rem;
+          font-size: 1rem;
+          font-family: $font-main;
+        }
+
+        #email {
+          margin: .6rem .2rem;
+        }
+
+        .btn-wrapper {
+          .btn {
+            margin-left: 0;
+            font-weight: 800;
           }
 
-          label {
-            color: $color-secondary;
-            font-size: .8rem;
-            font-weight: bold;
-            margin-bottom: .8rem;
-          }
-
-          input,
-          textarea {
-            background-color: rgba($color: $color-background, $alpha: .2);
-            border: 1px $color-background solid;
-            padding: .8rem;
-            font-size: 1rem;
-            font-family: $font-main;
-          }
-
-          .btn-wrapper {
-            .btn {
-              margin-left: 0;
-              font-weight: 800;
-            }
-
-            & button:nth-child(2) {
-              background-color: unset;
-              border: unset;
-              color: black;
-            }
+          & button:nth-child(2) {
+            background-color: unset;
+            border: unset;
+            color: black;
           }
         }
       }
+
     }
 
   }
