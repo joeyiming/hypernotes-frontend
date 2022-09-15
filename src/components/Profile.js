@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import userService from '../services/user'
 import AvatarModal from './AvatarModal';
 
 function Profile() {
-  let user = JSON.parse(localStorage.getItem('user'));
-
-  const [displayName, setDisplayName] = useState(user.displayName);
-  const [name, setName] = useState(user.name);
-  const [bio, setBio] = useState(user.bio);
+  const [user, setUser] = useOutletContext();
+  const [displayName, setDisplayName] = useState('');
+  const [name, setName] = useState('');
+  const [bio, setBio] = useState('');
   const [pop, setPop] = useState(false);
 
-  // 保持localStorage中的user与程序user一致
   useEffect(() => {
-    user = { ...user, 'name': name, 'displayName': displayName, 'bio': bio };
-    localStorage.setItem('user', JSON.stringify(user));
-  }, [name, displayName, bio])
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setUser(user);
+      setDisplayName(user.displayName);
+      setName(user.name);
+      setBio(user.bio);
+    }
+  }, []);
+
+  useEffect(() => {
+    if(user){
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+  }, [user])
 
 
   const togglePop = () => {
@@ -31,7 +41,10 @@ function Profile() {
     }
     try {
       userService.updateUser(user.id, content).then(response => {
-        console.log(response);
+        if (response.status===200){
+          const newUser = { ...user, ...content };
+          setUser(newUser);
+        }
       })
     } catch (error) {
       console.error(error);
@@ -62,7 +75,7 @@ function Profile() {
         </div>
         <button type='submit' className='btn btn-big btn-submit'>保存</button>
       </form>
-      {pop ? <AvatarModal toggle={togglePop} /> : null}
+      {pop ? <AvatarModal toggle={togglePop} user={user} setUser={setUser} /> : null}
     </div>
   )
 }

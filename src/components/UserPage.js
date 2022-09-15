@@ -1,11 +1,23 @@
-import React, { useEffect } from 'react'
-import logo from '../logo.svg'
-import { Link, Outlet } from 'react-router-dom'
-import userService from '../services/user'
+import React, { useEffect } from 'react';
+import { Link, Outlet, useOutletContext } from 'react-router-dom';
+import logo from '../logo.svg';
 
 function UserPage() {
-  const user = JSON.parse(localStorage.getItem('user'));
+  const [user, setUser] = useOutletContext();
   const pathname = window.location.pathname;
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setUser(user);
+    }
+  }, [])
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+  }, [user])
 
   const toggleActiveTab = (e) => {
     const tabList = ['nav-profile', 'nav-options']
@@ -27,10 +39,10 @@ function UserPage() {
     <main id='User'>
       <div className='user-header'>
         <div className='user-avatar'>
-          {user.avatarUrl ? <img src={user.avatarUrl} alt="avatar" /> : <img src={logo} alt="avatar" />}
+          {user && user.avatarUrl ? <img src={user.avatarUrl} alt="avatar" /> : <img src={logo} alt="avatar" />}
         </div>
         <div className='user-name'>
-          {user.displayName || user.name}
+          {user ? user.displayName : 'loading'}
         </div>
       </div>
       <div className='user-body'>
@@ -43,7 +55,7 @@ function UserPage() {
           </Link>
         </nav>
         <div className='content'>
-          <Outlet />
+          <Outlet context={[user, setUser]} />
         </div>
       </div>
     </main>

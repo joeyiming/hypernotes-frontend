@@ -1,10 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import userService from '../services/user'
 import emailService from '../services/email'
+import EmailModal from './EmailModal';
+import { useOutletContext } from 'react-router-dom';
 
 function Options() {
-  let user = JSON.parse(localStorage.getItem('user'));
-  const [status,setStatus] = useState(user.emailStatus);
+  const [user,setUser] = useOutletContext();
+  const [status,setStatus] = useState(false);
+  const [pop, setPop] = useState(false);
+  
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem('user'));
+    if(user){
+      setUser(user);
+      setStatus(user.emailStatus);
+    }
+  },[])
+
+  useEffect(()=>{
+    if (user) {
+      localStorage.setItem('user',JSON.stringify(user));
+    }
+  },[user])
+
+  const togglePop = () => {
+    setPop(!pop);
+  }
 
   // 发送验证邮件
   const onSend = () => {
@@ -33,9 +54,9 @@ function Options() {
     <div className='account'>
       <div className='session'>
         <label htmlFor='email'>邮箱（<span id='email-status'>{status ? '已验证' : '未验证'}</span>）</label>
-        <p id='email'>{user.email}</p>
+        <p id='email'>{user ? user.email : 'loading...'}</p>
         <div className='btn-wrapper'>
-          <button type='button' id='avatar' className='btn btn-medium'>更改邮箱</button>
+          <button type='button' id='avatar' className='btn btn-medium' onClick={togglePop}>更改邮箱</button>
           {status ? null : <button type='button' id='confirm' onClick={onSend}>验证邮箱</button>}
         </div>
       </div>
@@ -45,6 +66,7 @@ function Options() {
           <button type='button' id='avatar' className='btn btn-medium'>更改密码</button>
         </div>
       </div>
+      {pop ? <EmailModal toggle={togglePop} /> : null}
     </div>
   )
 }

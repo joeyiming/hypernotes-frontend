@@ -1,10 +1,23 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import userService from '../services/user';
 
 function AvatarModal({ toggle }) {
-  const user = JSON.parse(localStorage.getItem('user'));
+  const [user,setUser] = useOutletContext();
   const [file, setFile] = useState(null);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setUser(user);
+    }
+  }, [])
+
+  useEffect(()=>{
+    if(user){
+      localStorage.setItem('user',JSON.stringify(user));
+    }
+  },[user])
 
   const onFileChange = (e) => {
     if (e.target.files.length > 0) {
@@ -27,8 +40,13 @@ function AvatarModal({ toggle }) {
         const content = {
           'avatarUrl': url
         }
+
         userService.updateUser(user.id, content).then((res) => {
-          console.log(res);
+          if (res.status===200) {
+            let newUser = { ...user, ...content };
+            setUser(newUser);
+            toggle();
+          }
         })
       } else {
         console.log('上传失败');
@@ -38,7 +56,7 @@ function AvatarModal({ toggle }) {
   }
 
   return (
-    <div className="modal">
+    <div id="avatar-modal" className='modal'>
       <div className='modal-header'>
         <p>
           更改头像

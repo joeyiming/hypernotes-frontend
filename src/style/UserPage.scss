@@ -124,7 +124,7 @@ main#User {
 
   }
 
-  // 头像弹窗
+  // 弹窗公共样式
   .modal {
     position: fixed;
     height: 300px;
@@ -135,12 +135,15 @@ main#User {
     background-color: rgba($color: $color-background, $alpha: 1);
     color: black;
 
-    &-header {
+    .modal-header {
       display: flex;
       justify-content: space-between;
     }
+  }
 
-    &-body {
+  // 头像弹窗
+  #avatar-modal {
+    .modal-body {
       height: 200px;
       width: 200px;
       margin: 0 auto;
@@ -161,5 +164,10 @@ main#User {
       font-size: 0px;
       border-radius: 50%;
     }
+  }
+
+  // 邮箱弹窗
+  #email-modal {
+    
   }
 }
