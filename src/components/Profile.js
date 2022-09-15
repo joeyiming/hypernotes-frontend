@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import userService from '../services/user'
 import AvatarModal from './AvatarModal';
+const defaultAvatarUrl = 'http://localhost:3001/uploaded/default.jpg'
 
 function Profile() {
   const [user, setUser] = useOutletContext();
@@ -21,7 +22,7 @@ function Profile() {
   }, []);
 
   useEffect(() => {
-    if(user){
+    if (user) {
       localStorage.setItem('user', JSON.stringify(user));
     }
   }, [user])
@@ -29,6 +30,22 @@ function Profile() {
 
   const togglePop = () => {
     setPop(!pop);
+  }
+
+  const onRemove = ()=> {
+    const content = {
+      "avatarUrl": defaultAvatarUrl
+    };
+    try {
+      userService.updateUser(user.id, content).then(response => {
+        if (response.status === 200) {
+          const newUser = { ...user, ...content };
+          setUser(newUser);
+        }
+      })
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const onSubmit = (e) => {
@@ -41,7 +58,7 @@ function Profile() {
     }
     try {
       userService.updateUser(user.id, content).then(response => {
-        if (response.status===200){
+        if (response.status === 200) {
           const newUser = { ...user, ...content };
           setUser(newUser);
         }
@@ -66,7 +83,7 @@ function Profile() {
           <label>头像</label>
           <div className='btn-wrapper'>
             <button type='button' id='avatar' className='btn btn-medium' onClick={togglePop}>更改头像</button>
-            <button type='button' className='btn btn-medium'>移除头像</button>
+            <button type='button' className='btn btn-medium' onClick={onRemove}>移除头像</button>
           </div>
         </div>
         <div className='session'>
