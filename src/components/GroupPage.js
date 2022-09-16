@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import groupService from '../services/group';
 import userService from '../services/user';
 import '../style/GroupPage.scss';
+const defaultAvatarUrl = 'http://localhost:3001/uploaded/default.jpg'
 
 function GroupMember({ member }) {
   return (
     <li>
       <div className='member'>
-        <div className='member-avatar'></div>
+        <div className='member-avatar'>
+          {member && member.avatarUrl ? <img src={member.avatarUrl} alt="avatar" /> : <img src={defaultAvatarUrl} alt="avatar" />}
+        </div>
         <div className='member-name'>
           【{member.type}】{member ? member.name : 'Joey'}
         </div>
@@ -102,7 +105,10 @@ function GroupPage() {
           <form id='search-bar'>
             <input type='text' placeholder='搜索' />
           </form>
-          <button className='btn btn-big'>创建新小组</button>
+          <div className='btns'>
+            <button className='btn btn-big'>创建</button>
+            <button className='btn btn-big'>加入</button>
+          </div>
         </div>
       </div>
       <div className='body'>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import userService from '../services/user'
 import AvatarModal from './AvatarModal';
-const defaultAvatarUrl = 'http://localhost:3001/uploaded/default.jpg'
+const defaultAvatarUrl = 'http://localhost:3001/uploaded/default.jpg';
 
 function Profile() {
   const [user, setUser] = useOutletContext();

@@ -3,6 +3,10 @@
 @import './Home.scss';
 
 main#Group {
+  li {
+    list-style: none;
+  }
+
   .header {
     display: flex;
     flex-direction: column;
@@ -48,6 +52,34 @@ main#Group {
     &-body {
       border-bottom: 1px gray solid;
       padding-top: 1rem;
+
+      .member-list {
+        display: flex;
+        gap: 2rem;
+
+        .member {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          &-avatar {
+            width: 100px;
+            height: 100px;
+            margin: .4rem auto;
+            flex: initial;
+            display: grid;
+            place-items: center;
+
+            img {
+              height: inherit;
+              width: inherit;
+              margin: 0 auto;
+              background-color: rgba($color: white, $alpha: 1.0);
+              border-radius: 64px;
+            }
+          }
+        }
+      }
     }
 
     &-footer {
