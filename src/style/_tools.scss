@@ -27,12 +27,29 @@
 }
 
 form#search-bar {
-  
+
   input {
     width: 100%;
     height: 100%;
     font-size: 1rem;
     padding: .5rem;
     font-family: $font-main;
+  }
+}
+
+// 弹窗公共样式
+.modal {
+  position: fixed;
+  height: 300px;
+  width: 360px;
+  top: 40%;
+  left:calc(100% - 0.5 * #{width});
+  z-index: 1;
+  background-color: rgba($color: $color-background, $alpha: 1);
+  color: black;
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
   }
 }

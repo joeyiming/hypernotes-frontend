@@ -58,9 +58,9 @@ function AvatarModal({ toggle }) {
   return (
     <div id="avatar-modal" className='modal'>
       <div className='modal-header'>
-        <p>
+        <div className='modal-title'>
           更改头像
-        </p>
+        </div>
         <button className="close" onClick={() => toggle()}>&times;</button>
       </div>
       <div className="modal-body">

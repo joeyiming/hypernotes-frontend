@@ -46,7 +46,6 @@ const findMembers = (id, pairs) => {
       members.push({ 'id': pair.userId, 'type': pair.userType });
     }
   }
-  console.log('m:',members);
   return members;
 }
 

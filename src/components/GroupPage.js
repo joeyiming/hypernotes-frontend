@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import groupService from '../services/group';
-import userService from '../services/user';
-import AddGroupModal from '../components/AddGroupModal';
 import { useOutletContext } from 'react-router-dom';
+import AddGroupModal from '../components/AddGroupModal';
+import groupService from '../services/group';
 import '../style/GroupPage.scss';
 const defaultAvatarUrl = 'http://localhost:3001/uploaded/default.jpg'
 
@@ -14,35 +13,22 @@ function GroupMember({ member }) {
           {member && member.avatarUrl ? <img src={member.avatarUrl} alt="avatar" /> : <img src={defaultAvatarUrl} alt="avatar" />}
         </div>
         <div className='member-name'>
-          【{member.type}】{member ? member.name : 'Joey'}
+          【{member.userType}】{member ? member.name : 'Joey'}
         </div>
       </div>
     </li>
   );
 }
 
-function GroupCard({ group, userGroupPairs, setUserGroupPairs }) {
-  const user = JSON.parse(localStorage.getItem('user'));
-  const [groupMembers, setGroupMembers] = useState([])
-
+function GroupCard({ group, user, groups, setGroups }) {
   useEffect(() => {
-    // 根据group.members（ID）获取groupMembers（对象，添加type字段）
-    if (group.members) {
-      let promises = group.members.map((member) => userService.getUserById(member.id));
-      Promise.allSettled(promises).then((result) => {
-        let users = result.map((r) => r.value.data);
-        for (const member of group.members) {
-          users = users.map(user => user.id === member.id ? { ...user, 'type': member.type } : user)
-        }
-        setGroupMembers(users);
-      })
-    }
-  }, [group.members])
+    console.log('g:', group);
+  }, [])
 
   const handleExitGroup = (userId, groupId) => {
-    setGroupMembers(groupMembers => groupMembers.filter(member => member.id !== user.id))
-    groupService.exitGroup(userId, groupId).then((response) => {
-      // console.log(response);
+    groupService.exitGroup(userId, groupId).then((res) => {
+      const newGroups = groups.filter((group) => group.id !== groupId)
+      setGroups(newGroups)
     });
   }
 
@@ -53,14 +39,14 @@ function GroupCard({ group, userGroupPairs, setUserGroupPairs }) {
           {group.name}
         </div>
         <div className='group-btns'>
-          <button className='btn btn-medium'>管理</button>
+          <button className='btn btn-medium'>管理（待完成）</button>
           <button className='btn btn-medium' onClick={() => { handleExitGroup(user.id, group.id) }}>退出</button>
         </div>
       </div>
       <div className='card-body'>
-        <div className='group-members'>小组成员(<span>{groupMembers.length}</span>)</div>
+        <div className='group-members'>小组成员(<span>{group.members ? group.members.length : 0}</span>)</div>
         <ul className='member-list'>
-          {groupMembers.length > 0 ? groupMembers.map((member) => <GroupMember key={member.id} member={member} />) : 'Loading...'}
+          {group && group.members && group.members.length > 0 ? group.members.map((member) => <GroupMember key={member.id} member={member} />) : 'Loading...'}
         </ul>
       </div>
       <div className='card-footer'>
@@ -86,11 +72,11 @@ function GroupPage() {
     if (user) {
       setUser(user);
     }
-    groupService.getGroupsByUser(user.id).then((response) => {
-      setGroups(response.data);
+    groupService.getGroupsByUser(user.id).then((res) => {
+      setGroups(res.data);
     })
-    groupService.getPairs().then((response) => {
-      setUserGroupPairs(response.data);
+    groupService.getPairs().then((res) => {
+      setUserGroupPairs(res.data);
     })
   }, [])
 
@@ -100,36 +86,45 @@ function GroupPage() {
     }
   }, [user])
 
-  // * 可以修改为getMembersByGroupId
+
+
   useEffect(() => {
-    if (groups[0] && userGroupPairs[0] && !groups[0].members) {
-      let newGroups = groups.map((group) => {
-        group.members = groupService.findMembers(group.id, userGroupPairs);
-        return group;
+    // 为groups补充members信息
+    if (groups.length > 0) {
+      let promises = groups.map((group) => groupService.getMembersByGroupId(group.id))
+      Promise.allSettled(promises).then((result) => {
+        let users = result.map((r) => r.value.data);
+        let newGroups = []
+        for (let index = 0; index < groups.length; index++) {
+          const group = groups[index]
+          const members = users[index]
+          group.members = members
+          newGroups.push(group)
+        }
+        setGroups(newGroups)
       })
-      setGroups(newGroups);
     }
-  }, [groups, userGroupPairs])
+  }, [groups.length])
 
   return (
     <main id='Group'>
-      {addModalPop ? <AddGroupModal toggle={toggleAddModal} /> : null}
+      {addModalPop ? <AddGroupModal toggle={toggleAddModal} user={user} setUser={setUser} userGroupPairs={userGroupPairs} setUserGroupPairs={setUserGroupPairs} groups={groups} setGroups={setGroups} /> : null}
       <div className='header'>
         <div className='title'>我的小组</div>
         <div className='wrapper'>
           <form id='search-bar'>
-            <input type='text' placeholder='搜索' />
+            <input type='text' placeholder='搜索（待完成）' />
           </form>
           <div className='btns'>
-            <button className='btn btn-big'>创建</button>
+            <button className='btn btn-big'>创建（待完成）</button>
             <button className='btn btn-big' onClick={toggleAddModal}>加入</button>
           </div>
         </div>
       </div>
       <div className='body'>
         <div className='cards'>
-          {groups && groups[0] ? groups.map((group) => {
-            return <GroupCard key={group.id} group={group} userGroupPairs={userGroupPairs} setUserGroupPairs={setUserGroupPairs} />
+          {groups && groups[0] && groups[0].members ? groups.map((group) => {
+            return <GroupCard key={group.id} group={group} user={user} groups={groups} setGroups={setGroups} userGroupPairs={userGroupPairs} setUserGroupPairs={setUserGroupPairs} />
           }) : 'Loading...'}
         </div>
       </div>

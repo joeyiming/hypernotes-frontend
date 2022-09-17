@@ -37,7 +37,7 @@ function Options() {
     console.log('sending...');
     const receiver = { 'receiver': user.email };
     emailService.sendVerifyEmail(receiver).then((res) => {
-      console.log(res.status, res.statusText);
+      // console.log(res.status, res.statusText);
     })
 
     // TODO 更新用户邮箱

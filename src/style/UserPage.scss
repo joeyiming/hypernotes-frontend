@@ -1,4 +1,5 @@
 @import "./variables";
+@import "./tools";
 
 main#User {
   height: 100%;
@@ -122,23 +123,6 @@ main#User {
 
     }
 
-  }
-
-  // 弹窗公共样式
-  .modal {
-    position: fixed;
-    height: 300px;
-    width: 360px;
-    top: 40%;
-    left:calc(100% - 0.5 * #{width});
-    z-index: 1;
-    background-color: rgba($color: $color-background, $alpha: 1);
-    color: black;
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-    }
   }
 
   // 头像弹窗

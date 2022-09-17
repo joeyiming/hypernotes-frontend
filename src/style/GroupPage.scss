@@ -88,4 +88,29 @@ main#Group {
 
   }
 
+  .search-group-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
+
+    .info {
+      display: flex;
+      flex-direction: column;
+
+      .name {
+        font-weight: bold;
+      }
+
+      .desc {
+        color: rgba($color: #000000, $alpha: .6);
+      }
+    }
+
+    .btn-wrapper {
+      button {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 }

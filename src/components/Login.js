@@ -16,7 +16,6 @@ function LoginForm({ changePage }) {
     try {
       userService.getAllUsers().then(response => {
         let users = response.data;
-        console.log(users);
         const user = userService.findUserByName(username, users);
         if(!checkCaptcha) {
           console.error('验证码不正确');
