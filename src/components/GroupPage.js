@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import groupService from '../services/group';
 import userService from '../services/user';
+import AddGroupModal from '../components/AddGroupModal';
+import { useOutletContext } from 'react-router-dom';
 import '../style/GroupPage.scss';
 const defaultAvatarUrl = 'http://localhost:3001/uploaded/default.jpg'
 
@@ -70,15 +72,22 @@ function GroupCard({ group, userGroupPairs, setUserGroupPairs }) {
 
 
 function GroupPage() {
+  const [user, setUser] = useOutletContext();
   const [groups, setGroups] = useState([])
   const [userGroupPairs, setUserGroupPairs] = useState([])
+  const [addModalPop, setAddModalPop] = useState(false)
 
+  const toggleAddModal = () => {
+    setAddModalPop(!addModalPop);
+  }
 
   useEffect(() => {
-    console.log('从服务器获取数据……');
-    groupService.getAllGroups().then((response) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setUser(user);
+    }
+    groupService.getGroupsByUser(user.id).then((response) => {
       setGroups(response.data);
-      console.log('获取小组信息成功');
     })
     groupService.getPairs().then((response) => {
       setUserGroupPairs(response.data);
@@ -86,19 +95,25 @@ function GroupPage() {
   }, [])
 
   useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+  }, [user])
+
+  // * 可以修改为getMembersByGroupId
+  useEffect(() => {
     if (groups[0] && userGroupPairs[0] && !groups[0].members) {
       let newGroups = groups.map((group) => {
         group.members = groupService.findMembers(group.id, userGroupPairs);
         return group;
       })
       setGroups(newGroups);
-      console.log('获取组员信息成功');
-      console.log(newGroups);
     }
   }, [groups, userGroupPairs])
 
   return (
     <main id='Group'>
+      {addModalPop ? <AddGroupModal toggle={toggleAddModal} /> : null}
       <div className='header'>
         <div className='title'>我的小组</div>
         <div className='wrapper'>
@@ -107,7 +122,7 @@ function GroupPage() {
           </form>
           <div className='btns'>
             <button className='btn btn-big'>创建</button>
-            <button className='btn btn-big'>加入</button>
+            <button className='btn btn-big' onClick={toggleAddModal}>加入</button>
           </div>
         </div>
       </div>
