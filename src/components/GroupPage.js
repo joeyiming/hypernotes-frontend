@@ -3,6 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import AddGroupModal from '../components/AddGroupModal';
 import groupService from '../services/group';
 import '../style/GroupPage.scss';
+import CreateGroupModal from './CreateGroupModal';
 const defaultAvatarUrl = 'http://localhost:3001/uploaded/default.jpg'
 
 function GroupMember({ member }) {
@@ -21,10 +22,6 @@ function GroupMember({ member }) {
 }
 
 function GroupCard({ group, user, groups, setGroups }) {
-  useEffect(() => {
-    console.log('g:', group);
-  }, [])
-
   const handleExitGroup = (userId, groupId) => {
     groupService.exitGroup(userId, groupId).then((res) => {
       const newGroups = groups.filter((group) => group.id !== groupId)
@@ -62,9 +59,13 @@ function GroupPage() {
   const [groups, setGroups] = useState([])
   const [userGroupPairs, setUserGroupPairs] = useState([])
   const [addModalPop, setAddModalPop] = useState(false)
+  const [createModalPop, setCreateModalPop] = useState(false)
 
   const toggleAddModal = () => {
     setAddModalPop(!addModalPop);
+  }
+  const toggleCreateModal = () => {
+    setCreateModalPop(!createModalPop);
   }
 
   useEffect(() => {
@@ -109,6 +110,7 @@ function GroupPage() {
   return (
     <main id='Group'>
       {addModalPop ? <AddGroupModal toggle={toggleAddModal} user={user} setUser={setUser} userGroupPairs={userGroupPairs} setUserGroupPairs={setUserGroupPairs} groups={groups} setGroups={setGroups} /> : null}
+      {createModalPop ? <CreateGroupModal toggle={toggleCreateModal} user={user} setUser={setUser} userGroupPairs={userGroupPairs} setUserGroupPairs={setUserGroupPairs} groups={groups} setGroups={setGroups} /> : null}
       <div className='header'>
         <div className='title'>我的小组</div>
         <div className='wrapper'>
@@ -116,7 +118,7 @@ function GroupPage() {
             <input type='text' placeholder='搜索（待完成）' />
           </form>
           <div className='btns'>
-            <button className='btn btn-big'>创建（待完成）</button>
+            <button className='btn btn-big' onClick={toggleCreateModal}>创建</button>
             <button className='btn btn-big' onClick={toggleAddModal}>加入</button>
           </div>
         </div>

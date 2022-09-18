@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import group from '../services/group';
-import groupService from '../services/group'
+import React, { useEffect, useState } from 'react';
+import groupService from '../services/group';
 
 function GroupItem({ group, handleAdd }) {
 
@@ -26,7 +25,7 @@ function GroupList({ groups, handleAdd }) {
 }
 
 // TODO
-function AddGroupModal({ toggle, user, setUser, userGroupPairs, setUserGroupPairs, groups, setGroups, updateGroupMembers }) {
+function AddGroupModal({ toggle, user, setUser, userGroupPairs, setUserGroupPairs, groups, setGroups }) {
   const [searchValue, setSearchValue] = useState('')
   const [searchResult, setSearchResult] = useState([])
   const onSearch = ({ target }) => {
@@ -35,12 +34,13 @@ function AddGroupModal({ toggle, user, setUser, userGroupPairs, setUserGroupPair
 
 
   const handleAdd = (groupId) => {
-    groupService.addMemberToGroup(groupId, user.id).then((res) => {
+    const userType = '组员'
+    groupService.addMemberToGroup(groupId, user.id, userType).then((res) => {
       if (res.status === 200) {
         const newPair = {
           'userId': user.id,
           'groupId': groupId,
-          'userType': '组员'
+          'userType': userType
         }
         setUserGroupPairs([...userGroupPairs, newPair])
         groupService.getGroupById(groupId).then((res) => {
@@ -76,7 +76,6 @@ function AddGroupModal({ toggle, user, setUser, userGroupPairs, setUserGroupPair
         {searchResult ? <GroupList groups={searchResult} handleAdd={handleAdd} /> : null}
       </div>
     </div>
-
   )
 }
 

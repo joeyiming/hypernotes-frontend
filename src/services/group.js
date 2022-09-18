@@ -7,8 +7,8 @@ const getAllGroups = () => {
   return axios.get(baseUrl);
 }
 
-const getGroupsByUser = (userId)=>{
-  return axios.get(userUrl+`/${userId}/groups`);
+const getGroupsByUser = (userId) => {
+  return axios.get(userUrl + `/${userId}/groups`);
 }
 
 const getGroupById = (id) => {
@@ -29,9 +29,9 @@ const getMembersByGroupId = (id) => {
 }
 
 // 加入新成员
-// /api/groups/:id/members/:user
-const addMemberToGroup = (groupId, userId) => {
-  return axios.post(baseUrl + `/${groupId}/members/${userId}`)
+// /api/groups/:id/members/:user/:type
+const addMemberToGroup = (groupId, userId, userType) => {
+  return axios.post(baseUrl + `/${groupId}/members/${userId}/${userType}`)
 }
 
 // 搜索小组
@@ -39,14 +39,9 @@ const searchGroups = (value) => {
   return axios.get(baseUrl + `?value=${value}`);
 }
 
-const findMembers = (id, pairs) => {
-  let members = [];
-  for (const pair of pairs) {
-    if (pair.groupId === id) {
-      members.push({ 'id': pair.userId, 'type': pair.userType });
-    }
-  }
-  return members;
+// 创建小组
+const createNewGroup = (newGroup) => {
+  return axios.post(baseUrl, newGroup)
 }
 
-export default { getAllGroups, getGroupById, getPairs, findMembers, exitGroup, getMembersByGroupId, addMemberToGroup,searchGroups,getGroupsByUser }
+export default { getAllGroups, getGroupById, getPairs, createNewGroup, exitGroup, getMembersByGroupId, addMemberToGroup, searchGroups, getGroupsByUser }
