@@ -16,7 +16,7 @@ function CreateGroupModal({ toggle, user, setUser, userGroupPairs, setUserGroupP
           setGroups([...groups, group])
           groupService.addMemberToGroup(group.id, user.id, userType).then((res) => {
             const pair = res.data
-            setUserGroupPairs([ ...userGroupPairs, pair ])
+            setUserGroupPairs([...userGroupPairs, pair])
             console.log('g:', group);
             console.log('p:', pair);
             toggle()
