@@ -94,14 +94,13 @@ main#User {
           margin-bottom: .8rem;
         }
 
-        input,
-        textarea {
-          background-color: rgba($color: $color-background, $alpha: .2);
-          border: 1px $color-background solid;
-          padding: .8rem;
-          font-size: 1rem;
-          font-family: $font-main;
-        }
+        // input {
+        //   background-color: rgba($color: $color-background, $alpha: .2);
+        //   border: 1px $color-background solid;
+        //   padding: .8rem;
+        //   font-size: 1rem;
+        //   font-family: $font-main;
+        // }
 
         #email {
           margin: .6rem .2rem;

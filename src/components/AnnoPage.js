@@ -1,3 +1,4 @@
+import { Pagination } from '@mui/material';
 import React from 'react'
 
 function AnnoPage() {
@@ -45,6 +46,7 @@ function AnnoPage() {
           </div>
         </div>
       </div>
+      <Pagination count={10} />
     </main>
   )
 }

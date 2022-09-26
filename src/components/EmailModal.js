@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import userService from '../services/user';
 import CloseIcon from '@mui/icons-material/Close';
+import { Button, TextField } from '@mui/material';
+import { Container } from '@mui/system';
 
 function EmailModal({ toggle }) {
   const [user, setUser] = useOutletContext();
@@ -44,10 +46,12 @@ function EmailModal({ toggle }) {
       </div>
       <div className='modal-body'>
         <label>邮箱地址</label>
-        <input type='email' value={email} onChange={({ target }) => { setEmail(target.value) }} />
+        <TextField type='email' value={email} onChange={({ target }) => { setEmail(target.value) }} />
       </div>
       <div className="modal-footer">
-        <button type='button' onClick={onSave}>保存</button>
+        <Container sx={{width: 1/2}}>
+          <Button fullWidth variant='contained' type='button' onClick={onSave}>保存</Button>
+        </Container>
       </div>
     </div>
   )

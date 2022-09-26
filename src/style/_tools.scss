@@ -51,8 +51,10 @@ form#search-bar {
 }
 
 .modal-body {
+  display: flex;
+  flex-direction: column;
+
   label {
-    font-size: 18px;
     margin: .4rem 0 .8rem;
   }
 
@@ -61,6 +63,10 @@ form#search-bar {
     padding: .5rem 1rem;
     font-size: 16px;
   }
+}
+
+.modal-footer {
+  margin-top: 1rem;
 }
 
 .modal-header {
@@ -100,6 +106,7 @@ form#search-bar {
 
   .modal-footer {
     margin: 1rem 0 0;
+
     .btn-wrapper {
       width: fit-content;
       margin: 0 auto;
@@ -108,7 +115,8 @@ form#search-bar {
 }
 
 // 邮箱弹窗
-#email-modal {}
+#email-modal {
+}
 
 // 密码弹窗
 #password-modal {}
@@ -120,7 +128,7 @@ form#search-bar {
     flex-direction: column;
 
     button {
-      margin:1rem auto 0;
+      margin: 1rem auto 0;
     }
   }
 }

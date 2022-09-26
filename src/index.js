@@ -21,9 +21,10 @@ root.render(
         <Route path='/' element={<App />} />
         <Route path='home' element={<Home />}>
           <Route path='anno' element={<AnnoPage />} />
-          <Route path='group' element={<GroupPage />}>
+          <Route path='group'>
+            <Route index element={<GroupPage />} />
+            <Route path='detail' element={<Detail />} />
           </Route>
-          <Route path='detail' element={<Detail />} />
           <Route path='user' element={<UserPage />}>
             <Route path='profile' element={<Profile />} />
             <Route path='options' element={<Options />} />

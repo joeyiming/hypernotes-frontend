@@ -5,7 +5,8 @@ import AddGroupModal from '../components/AddGroupModal';
 import groupService from '../services/group';
 import '../style/GroupPage.scss';
 import CreateGroupModal from './CreateGroupModal';
-const defaultAvatarUrl = 'http://localhost:3001/uploaded/default.jpg'
+import NavPaths from '../utils/NavPaths';
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -23,10 +24,10 @@ function GroupMember({ member }) {
     <li>
       <div className='member'>
         <div className='member-avatar'>
-          <Avatar src={member.avatarUrl} alt={member.name} sx={{width:64,height:64}} />
+          <Avatar src={member.avatarUrl} alt={member.name} sx={{ width: 64, height: 64 }} />
         </div>
         <div className='member-name'>
-          【{member.userType}】{member ? member.name : 'Joey'}
+          【{member.userType}】{member ? member.displayName : member.name}
         </div>
       </div>
     </li>
@@ -48,7 +49,7 @@ function GroupCard({ group, user, groups, setGroups }) {
           {group.name}
         </div>
         <div className='group-btns'>
-          <Link to={`/home/detail?id=${group.id}`}>
+          <Link to={`detail`} state={{ group: group }}>
             <button className='btn btn-medium'>详情</button>
           </Link>
           <button className='btn btn-medium' onClick={() => { handleExitGroup(user.id, group.id) }}>退出</button>
@@ -152,7 +153,7 @@ function GroupPage() {
 
   return (
     <main id='Group'>
-
+      <NavPaths />
       <div className='header'>
         <div className='title'>我的小组</div>
         <div className='wrapper'>

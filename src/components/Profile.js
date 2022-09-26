@@ -1,4 +1,4 @@
-import { Alert, Modal, Snackbar } from '@mui/material';
+import { Alert, Modal, Snackbar, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
@@ -88,11 +88,11 @@ function Profile() {
       <form onSubmit={onSubmit}>
         <div className='session'>
           <label htmlFor='dname'>显示名</label>
-          <input id='dname' type="text" value={displayName} onChange={({ target }) => setDisplayName(target.value)} />
+          <TextField id='dname' type="text" value={displayName} onChange={({ target }) => setDisplayName(target.value)} />
         </div>
         <div className='session'>
           <label htmlFor='username'>用户名</label>
-          <input id='username' type="text" value={name} onChange={({ target }) => setName(target.value)} />
+          <TextField id='username' type="text" value={name} onChange={({ target }) => setName(target.value)} />
         </div>
         <div className='session'>
           <label>头像</label>
@@ -118,7 +118,7 @@ function Profile() {
         </div>
         <div className='session'>
           <label htmlFor='bio'>自我介绍</label>
-          <textarea id='bio' value={bio} onChange={({ target }) => { setBio(target.value) }} />
+          <TextField multiline id='bio' value={bio} onChange={({ target }) => { setBio(target.value) }} />
         </div>
         <button type='submit' className='btn btn-large btn-submit'>保存</button>
       </form>

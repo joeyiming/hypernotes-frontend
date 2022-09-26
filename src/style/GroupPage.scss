@@ -3,6 +3,10 @@
 @import './Home.scss';
 
 main#Group {
+  nav {
+    margin-bottom: 1rem;
+  }
+
   li {
     list-style: none;
   }
