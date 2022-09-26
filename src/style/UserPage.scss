@@ -124,34 +124,4 @@ main#User {
     }
 
   }
-
-  // 头像弹窗
-  #avatar-modal {
-    .modal-body {
-      height: 200px;
-      width: 200px;
-      margin: 0 auto;
-      border-radius: 50%;
-      background-color: rgba($color: $color-secondary, $alpha: .5);
-      display: grid;
-      place-items: center;
-    }
-
-    input#file-input {
-      position: absolute;
-      top: 21.5px;
-      left: 80px;
-      height: 200px;
-      width: 200px;
-      opacity: 0;
-      cursor: pointer;
-      font-size: 0px;
-      border-radius: 50%;
-    }
-  }
-
-  // 邮箱弹窗
-  #email-modal {
-    
-  }
 }

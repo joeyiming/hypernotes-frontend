@@ -55,16 +55,14 @@ main#Group {
 
       .member-list {
         display: flex;
-        gap: 2rem;
+        gap: 1rem;
 
         .member {
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: .2rem;
 
           &-avatar {
-            width: 100px;
-            height: 100px;
             margin: .4rem auto;
             flex: initial;
             display: grid;

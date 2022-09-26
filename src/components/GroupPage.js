@@ -1,18 +1,29 @@
+import { Avatar, Box, Modal } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
 import AddGroupModal from '../components/AddGroupModal';
-import group from '../services/group';
 import groupService from '../services/group';
 import '../style/GroupPage.scss';
 import CreateGroupModal from './CreateGroupModal';
 const defaultAvatarUrl = 'http://localhost:3001/uploaded/default.jpg'
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'white',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 function GroupMember({ member }) {
   return (
     <li>
       <div className='member'>
         <div className='member-avatar'>
-          {member && member.avatarUrl ? <img src={member.avatarUrl} alt="avatar" /> : <img src={defaultAvatarUrl} alt="avatar" />}
+          <Avatar src={member.avatarUrl} alt={member.name} sx={{width:64,height:64}} />
         </div>
         <div className='member-name'>
           【{member.userType}】{member ? member.name : 'Joey'}
@@ -66,9 +77,9 @@ function GroupSearchBar({ groups, setGroups }) {
       e.preventDefault()
       // 将匹配的小组 hide 属性设置为 false，
       // 其他小组设置为 true
-      const showGroups = groups.filter(group => group.name.includes(searchValue));
+      const showGroups = groups.filter(group => group.name.toLowerCase().includes(searchValue.toLowerCase()));
       showGroups.map(group => group.hide = false)
-      const hideGroups = groups.filter(group => !group.name.includes(searchValue));
+      const hideGroups = groups.filter(group => !group.name.toLowerCase().includes(searchValue.toLowerCase()));
       hideGroups.map(group => group.hide = true);
       const newGroups = [...showGroups, ...hideGroups];
       console.log('n:', newGroups);
@@ -141,15 +152,34 @@ function GroupPage() {
 
   return (
     <main id='Group'>
-      {addModalPop ? <AddGroupModal toggle={toggleAddModal} user={user} setUser={setUser} userGroupPairs={userGroupPairs} setUserGroupPairs={setUserGroupPairs} groups={groups} setGroups={setGroups} /> : null}
-      {createModalPop ? <CreateGroupModal toggle={toggleCreateModal} user={user} setUser={setUser} userGroupPairs={userGroupPairs} setUserGroupPairs={setUserGroupPairs} groups={groups} setGroups={setGroups} /> : null}
+
       <div className='header'>
         <div className='title'>我的小组</div>
         <div className='wrapper'>
           <GroupSearchBar groups={groups} setGroups={setGroups} />
           <div className='btns'>
-            <button className='btn btn-big' onClick={toggleCreateModal}>创建</button>
-            <button className='btn btn-big' onClick={toggleAddModal}>加入</button>
+            <button type='button' id='createGroup' className='btn btn-large' onClick={toggleCreateModal}>创建</button>
+            <button type='button' id='addGroup' className='btn btn-large' onClick={toggleAddModal}>加入</button>
+            <Modal
+              open={createModalPop}
+              onClose={toggleCreateModal}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <CreateGroupModal toggle={toggleCreateModal} user={user} setUser={setUser} userGroupPairs={userGroupPairs} setUserGroupPairs={setUserGroupPairs} groups={groups} setGroups={setGroups} />
+              </Box>
+            </Modal>
+            <Modal
+              open={addModalPop}
+              onClose={toggleAddModal}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <AddGroupModal toggle={toggleAddModal} user={user} setUser={setUser} userGroupPairs={userGroupPairs} setUserGroupPairs={setUserGroupPairs} groups={groups} setGroups={setGroups} />
+              </Box>
+            </Modal>
           </div>
         </div>
       </div>

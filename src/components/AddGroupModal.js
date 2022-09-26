@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import groupService from '../services/group';
+import CloseIcon from '@mui/icons-material/Close';
+import AddIcon from '@mui/icons-material/Add';
 
 function GroupItem({ group, handleAdd }) {
 
@@ -10,7 +12,7 @@ function GroupItem({ group, handleAdd }) {
         <div className='desc'>{group.description}</div>
       </div>
       <div className='btn-wrapper'>
-        <button type='button' onClick={() => handleAdd(group.id)}>+</button>
+        <AddIcon type='button' className='cursor' onClick={() => handleAdd(group.id)}></AddIcon>
       </div>
     </div>
   );
@@ -69,7 +71,7 @@ function AddGroupModal({ toggle, user, setUser, userGroupPairs, setUserGroupPair
     <div id='add-group-modal' className='modal'>
       <div className='modal-header'>
         <div className='modal-title'>加入小组</div>
-        <button className="close" onClick={() => toggle()}>&times;</button>
+        <CloseIcon className="cursor" onClick={() => toggle()}></CloseIcon>
       </div>
       <div className='modal-body'>
         <input type='search' value={searchValue} onChange={onSearch} />

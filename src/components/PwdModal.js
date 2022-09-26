@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import userService from '../services/user';
+import CloseIcon from '@mui/icons-material/Close';
 
 function PwdModal({ toggle }) {
   const [user, setUser] = useOutletContext();
@@ -39,7 +40,7 @@ function PwdModal({ toggle }) {
         <p>
           更改密码
         </p>
-        <button className="close" onClick={() => toggle()}>&times;</button>
+        <CloseIcon className="cursor" onClick={() => toggle()} />
       </div>
       <div className='modal-body'>
         <label>密码</label>

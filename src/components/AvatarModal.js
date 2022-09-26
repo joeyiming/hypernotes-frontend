@@ -2,9 +2,13 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import userService from '../services/user';
+import CloseIcon from '@mui/icons-material/Close';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { Button } from '@mui/material';
+import { Send } from '@mui/icons-material';
 
 function AvatarModal({ toggle }) {
-  const [user,setUser] = useOutletContext();
+  const [user, setUser] = useOutletContext();
   const [file, setFile] = useState(null);
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -13,11 +17,11 @@ function AvatarModal({ toggle }) {
     }
   }, [])
 
-  useEffect(()=>{
-    if(user){
-      localStorage.setItem('user',JSON.stringify(user));
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
     }
-  },[user])
+  }, [user])
 
   const onFileChange = (e) => {
     if (e.target.files.length > 0) {
@@ -42,9 +46,10 @@ function AvatarModal({ toggle }) {
         }
 
         userService.updateUser(user.id, content).then((res) => {
-          if (res.status===200) {
+          if (res.status === 200) {
             let newUser = { ...user, ...content };
             setUser(newUser);
+            console.log('[avatarModal.js]',newUser);
             toggle();
           }
         })
@@ -61,14 +66,18 @@ function AvatarModal({ toggle }) {
         <div className='modal-title'>
           更改头像
         </div>
-        <button className="close" onClick={() => toggle()}>&times;</button>
+        <CloseIcon className="cursor" onClick={() => toggle()}></CloseIcon>
       </div>
       <div className="modal-body">
-        <div className='input-title'>⬆️</div>
+        <div className='input-title'>
+          <AddPhotoAlternateIcon sx={{ width: 48, height: 48 }} />
+        </div>
         <input id='file-input' type='file' accept='.jpg,.jpeg,.png,.gif' onChange={onFileChange} />
       </div>
       <div className="modal-footer">
-        <button type='button' onClick={onFileUpload}>保存</button>
+        <div className='btn-wrapper'>
+          {file ? <Button variant='contained' onClick={onFileUpload} endIcon={<Send />}>上传</Button> : <Button disabled variant='contained' onClick={onFileUpload} endIcon={<Send />}>上传</Button>}
+        </div>
       </div>
     </div>
   )

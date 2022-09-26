@@ -1,6 +1,6 @@
+import { Avatar } from '@mui/material';
 import React, { useEffect } from 'react';
 import { Link, Outlet, useOutletContext } from 'react-router-dom';
-import logo from '../logo.svg';
 
 function UserPage() {
   const [user, setUser] = useOutletContext();
@@ -39,7 +39,7 @@ function UserPage() {
     <main id='User'>
       <div className='user-header'>
         <div className='user-avatar'>
-          {user && user.avatarUrl ? <img src={user.avatarUrl} alt="avatar" /> : <img src={logo} alt="avatar" />}
+          <Avatar sx={{ width: 100, height: 100 }} src={user ? user.avatarUrl : null} alt={user ? user.avatarUrl : null} ></Avatar>
         </div>
         <div className='user-name'>
           {user ? user.displayName : 'loading'}

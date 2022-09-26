@@ -1,3 +1,11 @@
+.hide {
+  display: none;
+}
+
+#signOut {
+  color: rgba($color: $color-secondary, $alpha: 1);
+}
+
 .btn {
   border: 1px rgba($color: #000000, $alpha: 0.4) solid;
 
@@ -9,7 +17,7 @@
   background-color: rgba($color: $color-secondary, $alpha: .9);
   cursor: pointer;
 
-  &-big {
+  &-large {
     width: 100px;
     padding: .4rem .4rem;
     font-size: 1rem;
@@ -37,19 +45,98 @@ form#search-bar {
   }
 }
 
-// 弹窗公共样式
-.modal {
-  position: fixed;
-  height: 300px;
-  width: 360px;
-  top: 40%;
-  left:calc(100% - 0.5 * #{width});
-  z-index: 1;
-  background-color: rgba($color: $color-background, $alpha: 1);
-  color: black;
+// 弹窗样式
+.cursor {
+  cursor: pointer;
+}
 
-  .modal-header {
+.modal-body {
+  label {
+    font-size: 18px;
+    margin: .4rem 0 .8rem;
+  }
+
+  input {
+    width: 100%;
+    padding: .5rem 1rem;
+    font-size: 16px;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  .modal-title {
+    font-family: $font-main;
+    font-size: 22px;
+  }
+}
+
+// 头像弹窗
+#avatar-modal {
+  .modal-body {
+    height: 200px;
+    width: 200px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background-color: rgba($color: $color-secondary, $alpha: .5);
+    display: grid;
+    place-items: center;
+  }
+
+  input#file-input {
+    position: absolute;
+    top: 21.5px;
+    left: 80px;
+    height: 200px;
+    width: 200px;
+    opacity: 0;
+    cursor: pointer;
+    font-size: 0px;
+    border-radius: 50%;
+  }
+
+  .modal-footer {
+    margin: 1rem 0 0;
+    .btn-wrapper {
+      width: fit-content;
+      margin: 0 auto;
+    }
+  }
+}
+
+// 邮箱弹窗
+#email-modal {}
+
+// 密码弹窗
+#password-modal {}
+
+// 创建小组弹窗
+#create-group-modal {
+  form {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+
+    button {
+      margin:1rem auto 0;
+    }
+  }
+}
+
+// 加入小组弹窗
+#add-group-modal {
+  .modal-body {
+    .search-group-list {
+      margin: 1rem;
+
+      .search-group-item {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: .5rem;
+        border-bottom: 1px solid black;
+      }
+    }
   }
 }

@@ -11,6 +11,7 @@ import Profile from './components/Profile';
 import Options from './components/Options';
 import GroupPage from './components/GroupPage';
 import About from './components/About';
+import Detail from './components/Detail';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,7 +21,9 @@ root.render(
         <Route path='/' element={<App />} />
         <Route path='home' element={<Home />}>
           <Route path='anno' element={<AnnoPage />} />
-          <Route path='group' element={<GroupPage />} />
+          <Route path='group' element={<GroupPage />}>
+          </Route>
+          <Route path='detail' element={<Detail />} />
           <Route path='user' element={<UserPage />}>
             <Route path='profile' element={<Profile />} />
             <Route path='options' element={<Options />} />

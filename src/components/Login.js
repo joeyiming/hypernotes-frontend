@@ -47,7 +47,7 @@ function LoginForm({ changePage }) {
       <input id="password" className='form-input' type="password" value={password} onChange={({ target }) => { setPassword(target.value) }} />
       <Captcha checkCaptcha={checkCaptcha} setCheckCaptcha={setCheckCaptcha} />
       <div className='form-footer'>
-        <button className='btn btn-big btn-login' type='submit' onClick={handleLogin}>登录</button>
+        <button className='btn btn-large btn-login' type='submit' onClick={handleLogin}>登录</button>
         <button className='loginOrRegister' onClick={changePage}>没有账号？点击注册</button>
       </div>
     </form>
@@ -109,7 +109,7 @@ function RegisterForm({ changePage, showRegister, setShowRegister }) {
       <input id="re-password" className='form-input' type="password" value={repwd} onChange={({ target }) => { setRepwd(target.value) }} />
       <Captcha checkCaptcha={checkCaptcha} setCheckCaptcha={setCheckCaptcha} />
       <div className='form-footer'>
-        <button className='btn btn-big' type='submit'>注册</button>
+        <button className='btn btn-large' type='submit'>注册</button>
         <button className='loginOrRegister' onClick={changePage}>返回登录</button>
       </div>
     </form>
@@ -145,7 +145,6 @@ function Login() {
           <RegisterForm changePage={changePage} /> :
           <LoginForm changePage={changePage} />}
       </div>
-      <div className='left-footer'>Made with ❤️ by Youzi</div>
     </div>
   )
 }
