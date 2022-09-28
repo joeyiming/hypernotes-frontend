@@ -61,9 +61,9 @@ function GroupCard({ group, user, groups, setGroups }) {
           {group && group.members && group.members.length > 0 ? group.members.map((member) => <GroupMember key={member.id} member={member} />) : 'Loading...'}
         </ul>
       </div>
-      <div className='card-footer'>
+      {/* <div className='card-footer'>
         标注数：<span>{group.count}</span>
-      </div>
+      </div> */}
     </div>
   );
 }

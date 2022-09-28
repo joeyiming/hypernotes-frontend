@@ -16,13 +16,19 @@ function AnnoPage() {
         <div className='anno-items'>
           <div className='anno-item'>
             <div className='anno-source'>web.dev</div>
-            <div className='anno-title'>Grid</div>
+            <div className='anno-title'>Learn Responsive Design
+</div>
             <div className='anno-count'>3</div>
           </div>
           <div className='anno-item'>
             <div className='anno-source'>book.douban.com</div>
-            <div className='anno-title'>Bullshit Jobs</div>
+            <div className='anno-title'>看不见的女性</div>
             <div className='anno-count'>11</div>
+          </div>
+          <div className='anno-item'>
+            <div className='anno-source'>github.com</div>
+            <div className='anno-title'>CSS Working Group Editor Drafts</div>
+            <div className='anno-count'>32</div>
           </div>
           <div className='anno-item'>
             <div className='anno-source'>github.com</div>
@@ -30,20 +36,11 @@ function AnnoPage() {
             <div className='anno-count'>32</div>
           </div>
           <div className='anno-item'>
-            <div className='anno-source'>bilibili.com</div>
-            <div className='anno-title'>【安利！】这些游戏竟然都是「一个人」做的？｜小宁子</div>
-            <div className='anno-count'>3</div>
+            <div className='anno-source'>github.com</div>
+            <div className='anno-title'>基于ECharts的数据可视化实现</div>
+            <div className='anno-count'>32</div>
           </div>
-          <div className='anno-item'>
-            <div className='anno-source'>bilibili.com</div>
-            <div className='anno-title'>【安利！】这些游戏竟然都是「一个人」做的？｜小宁子</div>
-            <div className='anno-count'>3</div>
-          </div>
-          <div className='anno-item'>
-            <div className='anno-source'>bilibili.com</div>
-            <div className='anno-title'>【安利！】这些游戏竟然都是「一个人」做的？｜小宁子</div>
-            <div className='anno-count'>3</div>
-          </div>
+          
         </div>
       </div>
       <Pagination count={10} />

@@ -15,12 +15,16 @@ const getGroupById = (id) => {
   return axios.get(baseUrl + `/${id}`);
 }
 
+const updateGroup = (id, content) => {
+  return axios.put(baseUrl + `/${id}`, content);
+}
+
 const getPairs = () => {
   return axios.get(pairUrl);
 }
 
-const exitGroup = (userId, groupId) => {
-  return axios.delete(pairUrl + `/${userId}/${groupId}`);
+const exitGroup = (groupId, userId) => {
+  return axios.delete(baseUrl + `/${groupId}/members/${userId}`);
 }
 
 // 获取成员列表
@@ -44,4 +48,4 @@ const createNewGroup = (newGroup) => {
   return axios.post(baseUrl, newGroup)
 }
 
-export default { getAllGroups, getGroupById, getPairs, createNewGroup, exitGroup, getMembersByGroupId, addMemberToGroup, searchGroups, getGroupsByUser }
+export default { getAllGroups, getGroupById, getPairs, createNewGroup, exitGroup, getMembersByGroupId, addMemberToGroup, searchGroups, getGroupsByUser, updateGroup }
